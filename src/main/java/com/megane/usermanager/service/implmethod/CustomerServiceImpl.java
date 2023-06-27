@@ -5,7 +5,6 @@ import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.entity.Customer;
 import com.megane.usermanager.repo.CustomerRepo;
-import com.megane.usermanager.repo.UserRepo;
 import com.megane.usermanager.service.itfmethod.CustomerService;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
