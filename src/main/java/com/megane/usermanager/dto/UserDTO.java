@@ -10,12 +10,14 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDTO {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private int id;
+
 
     @NotBlank
     private String fullName;
@@ -28,5 +30,5 @@ public class UserDTO {
     private Date birthDate;
     private String homeAddress;
 
-
+    private List<RoleDTO> roles;
 }

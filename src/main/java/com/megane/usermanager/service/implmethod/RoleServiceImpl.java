@@ -27,7 +27,7 @@ public class RoleServiceImpl implements RoleService {
     public void update(RoleDTO roleDTO) {
         Role currentRole = roleRepo.findById(roleDTO.getId()).orElseThrow(NoResultException::new);
         if(currentRole != null){
-            currentRole.setNameRole(roleDTO.getRoleName());
+            currentRole.setName(roleDTO.getName());
             roleRepo.save(currentRole);
         }
     }

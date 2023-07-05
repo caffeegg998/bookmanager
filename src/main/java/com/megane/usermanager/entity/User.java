@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,5 +23,11 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String homeAddress;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private List<Role> roles;
 
 }

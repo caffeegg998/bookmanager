@@ -11,5 +11,5 @@ public class Role {
     private Integer id;
 
     @Column(unique = true)
-    private String nameRole; //["ADMIN","MEMBER"]
+    private String name; //["ADMIN","MEMBER"]
 }

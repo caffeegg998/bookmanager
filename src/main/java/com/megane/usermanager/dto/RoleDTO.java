@@ -11,5 +11,5 @@ public class RoleDTO {
 
     @NotBlank
     @Size(min = 6, max = 20)
-    private String roleName;
+    private String name;
 }

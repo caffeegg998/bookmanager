@@ -3,19 +3,26 @@ package com.megane.usermanager.service.implmethod;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
+import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.entity.User;
 import com.megane.usermanager.repo.UserRepo;
 import com.megane.usermanager.service.itfmethod.UserService;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     UserRepo userRepo;
@@ -23,6 +30,7 @@ class UserServiceImpl implements UserService {
     @Override
     public void create(UserDTO userDTO) {
         User user = new ModelMapper().map(userDTO,User.class);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepo.save(user);
     }
 
@@ -64,5 +72,23 @@ class UserServiceImpl implements UserService {
     }
     private UserDTO convert(User user){
         return new ModelMapper().map(user,UserDTO.class);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User userEntity = userRepo.findByUsername(username);
+        if(userEntity == null){
+            throw new UsernameNotFoundException("not Found");
+        }
+
+        //convert userentity -> userdetails
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        //chuyen vai tro ve quyen
+        for(Role role : userEntity.getRoles()){
+            authorities.add(new SimpleGrantedAuthority(role.getName().toString()));
+        }
+
+        return new org.springframework.security.core.userdetails.User(username,
+                userEntity.getPassword(), authorities);
     }
 }
