@@ -3428,3 +3428,247 @@ io.jsonwebtoken.security.WeakKeyException: The signing key's size is 32 bits whi
 2023-07-05T14:38:53.090+07:00  INFO 22000 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
 2023-07-05T14:38:53.931+07:00  INFO 22000 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
 2023-07-05T14:38:54.656+07:00  INFO 22000 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:16:37.736+07:00  WARN 22000 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m16s321ms).
+2023-07-05T15:36:41.283+07:00  INFO 22000 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:36:47.874+07:00  INFO 22000 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:36:47.889+07:00  INFO 22000 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-05T15:36:47.899+07:00  INFO 22000 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-05T15:36:57.465+07:00  INFO 24427 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.6 with PID 24427 (/Volumes/Data/Intellij/bookmanager/target/classes started by caffeegg998 in /Volumes/Data/Intellij/bookmanager)
+2023-07-05T15:36:57.475+07:00  INFO 24427 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-05T15:36:57.646+07:00  INFO 24427 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-05T15:36:57.646+07:00  INFO 24427 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-05T15:36:59.637+07:00  INFO 24427 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-05T15:36:59.812+07:00  INFO 24427 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 161 ms. Found 6 JPA repository interfaces.
+2023-07-05T15:37:02.021+07:00  INFO 24427 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-05T15:37:02.037+07:00  INFO 24427 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-05T15:37:02.038+07:00  INFO 24427 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-05T15:37:02.147+07:00  INFO 24427 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-05T15:37:02.148+07:00  INFO 24427 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4501 ms
+2023-07-05T15:37:02.477+07:00  INFO 24427 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-05T15:37:03.143+07:00  INFO 24427 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ba19a2f
+2023-07-05T15:37:03.147+07:00  INFO 24427 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-05T15:37:03.218+07:00  INFO 24427 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-05T15:37:03.300+07:00  INFO 24427 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-05T15:37:03.305+07:00  INFO 24427 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-05T15:37:03.607+07:00  INFO 24427 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:37:03.977+07:00  INFO 24427 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-05T15:37:04.156+07:00  INFO 24427 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-05T15:37:04.159+07:00  WARN 24427 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-05T15:37:04.658+07:00  INFO 24427 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:37:05.975+07:00  INFO 24427 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-05T15:37:06.424+07:00  INFO 24427 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:37:07.182+07:00  INFO 24427 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-05T15:37:08.318+07:00  WARN 24427 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-05T15:37:08.870+07:00  INFO 24427 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@55bb2691, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4ff9977, org.springframework.security.web.context.SecurityContextHolderFilter@754235cc, org.springframework.security.web.header.HeaderWriterFilter@659de789, org.springframework.security.web.authentication.logout.LogoutFilter@61a77a4, com.megane.usermanager.Jwt.JwtTokenFilter@464000b0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@60563861, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@8590706, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@366b5fcc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@14bd0ec4, org.springframework.security.web.session.SessionManagementFilter@4f3a4800, org.springframework.security.web.access.ExceptionTranslationFilter@3fe904cc, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2633e1be]
+2023-07-05T15:37:09.149+07:00  WARN 24427 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-05T15:37:09.600+07:00  INFO 24427 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-05T15:37:09.667+07:00  INFO 24427 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-05T15:37:09.690+07:00  INFO 24427 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 13.816 seconds (process running for 15.345)
+2023-07-05T15:37:14.698+07:00  INFO 24427 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-05T15:37:14.700+07:00  INFO 24427 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-05T15:37:14.703+07:00  INFO 24427 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2023-07-05T15:37:14.759+07:00  INFO 24427 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:37:54.851+07:00  INFO 24427 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:37:54.858+07:00  INFO 24427 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-05T15:37:54.876+07:00  INFO 24427 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-05T15:38:02.097+07:00  INFO 24461 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.6 with PID 24461 (/Volumes/Data/Intellij/bookmanager/target/classes started by caffeegg998 in /Volumes/Data/Intellij/bookmanager)
+2023-07-05T15:38:02.106+07:00  INFO 24461 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-05T15:38:02.347+07:00  INFO 24461 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-05T15:38:02.348+07:00  INFO 24461 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-05T15:38:04.338+07:00  INFO 24461 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-05T15:38:04.509+07:00  INFO 24461 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 156 ms. Found 6 JPA repository interfaces.
+2023-07-05T15:38:06.311+07:00  INFO 24461 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-05T15:38:06.334+07:00  INFO 24461 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-05T15:38:06.335+07:00  INFO 24461 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-05T15:38:06.435+07:00  INFO 24461 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-05T15:38:06.436+07:00  INFO 24461 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4087 ms
+2023-07-05T15:38:06.709+07:00  INFO 24461 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-05T15:38:07.474+07:00  INFO 24461 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c2a840e
+2023-07-05T15:38:07.479+07:00  INFO 24461 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-05T15:38:07.549+07:00  INFO 24461 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-05T15:38:07.677+07:00  INFO 24461 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-05T15:38:07.684+07:00  INFO 24461 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-05T15:38:08.106+07:00  INFO 24461 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:38:08.519+07:00  INFO 24461 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-05T15:38:08.609+07:00  INFO 24461 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-05T15:38:08.612+07:00  WARN 24461 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-05T15:38:08.993+07:00  INFO 24461 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:38:10.363+07:00  INFO 24461 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-05T15:38:10.834+07:00  INFO 24461 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:38:11.545+07:00  INFO 24461 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-05T15:38:12.408+07:00  WARN 24461 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-05T15:38:12.999+07:00  INFO 24461 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@16404f67, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@15812ecc, org.springframework.security.web.context.SecurityContextHolderFilter@25773ac7, org.springframework.security.web.header.HeaderWriterFilter@26ccb695, org.springframework.security.web.authentication.logout.LogoutFilter@3c50bbc5, com.megane.usermanager.Jwt.JwtTokenFilter@7c71f838, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@42c83142, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@372c5f1e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5387e1b5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@a638c42, org.springframework.security.web.session.SessionManagementFilter@f7d04a9, org.springframework.security.web.access.ExceptionTranslationFilter@2136f715, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2649059d]
+2023-07-05T15:38:13.284+07:00  WARN 24461 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-05T15:38:13.655+07:00  INFO 24461 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-05T15:38:13.717+07:00  INFO 24461 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-05T15:38:13.744+07:00  INFO 24461 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 13.258 seconds (process running for 14.519)
+2023-07-05T15:38:16.490+07:00  INFO 24461 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-05T15:38:16.490+07:00  INFO 24461 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-05T15:38:16.493+07:00  INFO 24461 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2023-07-05T15:38:16.521+07:00  INFO 24461 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:38:27.657+07:00  INFO 24461 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQ2Mjk3LCJleHAiOjE2ODg1NDY1OTd9.YEWZNuCRZaJr5BIIAs2SBzPcmKHAmVIst5Vljixl41A
+2023-07-05T15:38:36.249+07:00  INFO 24461 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQ2Mjk3LCJleHAiOjE2ODg1NDY1OTd9.YEWZNuCRZaJr5BIIAs2SBzPcmKHAmVIst5Vljixl41A
+2023-07-05T15:38:49.548+07:00  INFO 24461 --- [http-nio-8082-exec-5] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQ2Mjk3LCJleHAiOjE2ODg1NDY1OTd9.YEWZNuCRZaJr5BIIAs2SBzPcmKHAmVIst5Vljixl41A
+2023-07-05T15:39:06.485+07:00  INFO 24461 --- [http-nio-8082-exec-6] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQ2Mjk3LCJleHAiOjE2ODg1NDY1OTd9.YEWZNuCRZaJr5BIIAs2SBzPcmKHAmVIst5Vljixl41A
+2023-07-05T15:41:20.840+07:00  INFO 24461 --- [http-nio-8082-exec-9] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:22.514+07:00  INFO 24461 --- [http-nio-8082-exec-10] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:23.465+07:00  INFO 24461 --- [http-nio-8082-exec-2] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:24.197+07:00  INFO 24461 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:24.974+07:00  INFO 24461 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:25.470+07:00  INFO 24461 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:26.023+07:00  INFO 24461 --- [http-nio-8082-exec-5] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:26.586+07:00  INFO 24461 --- [http-nio-8082-exec-6] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:27.099+07:00  INFO 24461 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:41:57.983+07:00  INFO 24461 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:41:57.989+07:00  INFO 24461 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-05T15:41:58.007+07:00  INFO 24461 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-05T15:42:04.966+07:00  INFO 24592 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.6 with PID 24592 (/Volumes/Data/Intellij/bookmanager/target/classes started by caffeegg998 in /Volumes/Data/Intellij/bookmanager)
+2023-07-05T15:42:04.970+07:00  INFO 24592 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-05T15:42:05.159+07:00  INFO 24592 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-05T15:42:05.160+07:00  INFO 24592 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-05T15:42:06.790+07:00  INFO 24592 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-05T15:42:06.981+07:00  INFO 24592 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 175 ms. Found 6 JPA repository interfaces.
+2023-07-05T15:42:08.533+07:00  INFO 24592 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-05T15:42:08.547+07:00  INFO 24592 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-05T15:42:08.548+07:00  INFO 24592 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-05T15:42:08.658+07:00  INFO 24592 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-05T15:42:08.659+07:00  INFO 24592 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3498 ms
+2023-07-05T15:42:09.093+07:00  INFO 24592 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-05T15:42:09.966+07:00  INFO 24592 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@262b4c05
+2023-07-05T15:42:09.970+07:00  INFO 24592 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-05T15:42:10.034+07:00  INFO 24592 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-05T15:42:10.145+07:00  INFO 24592 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-05T15:42:10.216+07:00  INFO 24592 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-05T15:42:10.505+07:00  INFO 24592 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:42:10.776+07:00  INFO 24592 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-05T15:42:10.901+07:00  INFO 24592 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-05T15:42:10.934+07:00  WARN 24592 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-05T15:42:11.364+07:00  INFO 24592 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:42:12.816+07:00  INFO 24592 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-05T15:42:13.182+07:00  INFO 24592 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:42:13.926+07:00  INFO 24592 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-05T15:42:15.093+07:00  WARN 24592 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-05T15:42:15.649+07:00  INFO 24592 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5608f97b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@33a79190, org.springframework.security.web.context.SecurityContextHolderFilter@7ea92c48, org.springframework.security.web.header.HeaderWriterFilter@7e6c7e2a, org.springframework.security.web.authentication.logout.LogoutFilter@1b4f5666, com.megane.usermanager.Jwt.JwtTokenFilter@aeef22, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@348a3802, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ded863a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@169f2e9c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7e1be0e8, org.springframework.security.web.session.SessionManagementFilter@35ef9c30, org.springframework.security.web.access.ExceptionTranslationFilter@3bf4adc, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1f1e5c76]
+2023-07-05T15:42:15.911+07:00  WARN 24592 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-05T15:42:16.298+07:00  INFO 24592 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-05T15:42:16.363+07:00  INFO 24592 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-05T15:42:16.393+07:00  INFO 24592 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 12.985 seconds (process running for 14.245)
+2023-07-05T15:42:22.717+07:00  INFO 24592 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-05T15:42:22.718+07:00  INFO 24592 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-05T15:42:22.720+07:00  INFO 24592 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-07-05T15:42:22.740+07:00  INFO 24592 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQyNzIyLCJleHAiOjE2ODg1NDMwMjJ9.-BOCZwEKOPVchoT64GY2l3ph-FwXNedcZ_seQ8RAb8I
+2023-07-05T15:42:28.633+07:00  INFO 24592 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:42:29.697+07:00  INFO 24592 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:45:03.636+07:00  INFO 24592 --- [http-nio-8082-exec-6] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:45:21.380+07:00  INFO 24592 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:45:34.604+07:00  INFO 24592 --- [http-nio-8082-exec-8] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:45:36.869+07:00  INFO 24592 --- [http-nio-8082-exec-9] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:46:08.118+07:00  INFO 24592 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:46:09.532+07:00  INFO 24592 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:46:10.745+07:00  INFO 24592 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:46:40.472+07:00  INFO 24592 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:46:40.483+07:00  INFO 24592 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-05T15:46:40.500+07:00  INFO 24592 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-05T15:46:47.491+07:00  INFO 24751 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.6 with PID 24751 (/Volumes/Data/Intellij/bookmanager/target/classes started by caffeegg998 in /Volumes/Data/Intellij/bookmanager)
+2023-07-05T15:46:47.497+07:00  INFO 24751 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-05T15:46:47.644+07:00  INFO 24751 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-05T15:46:47.644+07:00  INFO 24751 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-05T15:46:49.358+07:00  INFO 24751 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-05T15:46:49.540+07:00  INFO 24751 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 168 ms. Found 6 JPA repository interfaces.
+2023-07-05T15:46:51.002+07:00  INFO 24751 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-05T15:46:51.018+07:00  INFO 24751 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-05T15:46:51.019+07:00  INFO 24751 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-05T15:46:51.159+07:00  INFO 24751 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-05T15:46:51.160+07:00  INFO 24751 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3515 ms
+2023-07-05T15:46:51.476+07:00  INFO 24751 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-05T15:46:52.409+07:00  INFO 24751 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@15b206a4
+2023-07-05T15:46:52.412+07:00  INFO 24751 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-05T15:46:52.482+07:00  INFO 24751 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-05T15:46:52.583+07:00  INFO 24751 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-05T15:46:52.588+07:00  INFO 24751 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-05T15:46:52.827+07:00  INFO 24751 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:46:53.079+07:00  INFO 24751 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-05T15:46:53.183+07:00  INFO 24751 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-05T15:46:53.186+07:00  WARN 24751 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-05T15:46:53.688+07:00  INFO 24751 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:46:55.261+07:00  INFO 24751 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-05T15:46:55.647+07:00  INFO 24751 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:46:56.451+07:00  INFO 24751 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-05T15:46:57.659+07:00  WARN 24751 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-05T15:46:58.179+07:00  INFO 24751 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4830ede5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@ff560ec, org.springframework.security.web.context.SecurityContextHolderFilter@6b981e6f, org.springframework.security.web.header.HeaderWriterFilter@1a4c5762, org.springframework.security.web.authentication.logout.LogoutFilter@682aeaf5, com.megane.usermanager.Jwt.JwtTokenFilter@3057afd1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@55f24e09, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@757dcada, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4937390e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@64179463, org.springframework.security.web.session.SessionManagementFilter@4d37a218, org.springframework.security.web.access.ExceptionTranslationFilter@44c8e2a8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@75a345cc]
+2023-07-05T15:46:58.527+07:00  WARN 24751 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-05T15:46:58.897+07:00  INFO 24751 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-05T15:46:58.965+07:00  INFO 24751 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-05T15:46:58.994+07:00  INFO 24751 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 12.891 seconds (process running for 14.19)
+2023-07-05T15:47:04.934+07:00  INFO 24751 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-05T15:47:04.935+07:00  INFO 24751 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-05T15:47:04.938+07:00  INFO 24751 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2023-07-05T15:47:04.956+07:00  INFO 24751 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:07.255+07:00  INFO 24751 --- [http-nio-8082-exec-2] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:09.426+07:00  INFO 24751 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:19.164+07:00  INFO 24751 --- [http-nio-8082-exec-5] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:29.808+07:00  INFO 24751 --- [http-nio-8082-exec-6] c.megane.usermanager.Jwt.JwtTokenFilter  : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYWZmZWVnZzk5OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjg4NTQ2ODM5LCJleHAiOjE2ODg1NDcxMzl9.tITnb-TxZXT-lPGAlAJ_yXdA_ngIRvgoY-xPXe_-sFA
+2023-07-05T15:47:41.163+07:00  INFO 24751 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:42.638+07:00  INFO 24751 --- [http-nio-8082-exec-8] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:43.684+07:00  INFO 24751 --- [http-nio-8082-exec-9] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:47.004+07:00  INFO 24751 --- [http-nio-8082-exec-10] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:47:56.025+07:00  INFO 24751 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : Basic Y2FmZmVlZ2c5OTg6dGhpZW50b3RvMTIz
+2023-07-05T15:48:05.544+07:00  INFO 24751 --- [http-nio-8082-exec-2] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:48:08.138+07:00  INFO 24751 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : Basic Y2FmZmVlZ2c5OTg6dGhpZW50b3RvMTIz
+2023-07-05T15:48:09.471+07:00  INFO 24751 --- [http-nio-8082-exec-4] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:49:20.910+07:00  INFO 24751 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:49:20.929+07:00  WARN 24751 --- [http-nio-8082-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T15:50:01.975+07:00  INFO 24751 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:50:01.984+07:00  INFO 24751 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-05T15:50:01.996+07:00  INFO 24751 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-05T15:50:08.896+07:00  INFO 24862 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.6 with PID 24862 (/Volumes/Data/Intellij/bookmanager/target/classes started by caffeegg998 in /Volumes/Data/Intellij/bookmanager)
+2023-07-05T15:50:08.906+07:00  INFO 24862 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-05T15:50:09.238+07:00  INFO 24862 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-05T15:50:09.239+07:00  INFO 24862 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-05T15:50:11.784+07:00  INFO 24862 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-05T15:50:11.955+07:00  INFO 24862 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 155 ms. Found 6 JPA repository interfaces.
+2023-07-05T15:50:13.665+07:00  INFO 24862 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-05T15:50:13.683+07:00  INFO 24862 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-05T15:50:13.684+07:00  INFO 24862 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-05T15:50:13.784+07:00  INFO 24862 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-05T15:50:13.785+07:00  INFO 24862 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4543 ms
+2023-07-05T15:50:14.071+07:00  INFO 24862 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-05T15:50:14.922+07:00  INFO 24862 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ba19a2f
+2023-07-05T15:50:14.929+07:00  INFO 24862 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-05T15:50:14.997+07:00  INFO 24862 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-05T15:50:15.113+07:00  INFO 24862 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-05T15:50:15.130+07:00  INFO 24862 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-05T15:50:15.620+07:00  INFO 24862 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:50:15.987+07:00  INFO 24862 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-05T15:50:16.127+07:00  INFO 24862 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-05T15:50:16.135+07:00  WARN 24862 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-05T15:50:16.628+07:00  INFO 24862 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-05T15:50:18.270+07:00  INFO 24862 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-05T15:50:18.630+07:00  INFO 24862 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-05T15:50:19.394+07:00  INFO 24862 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-05T15:50:20.563+07:00  WARN 24862 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-05T15:50:21.236+07:00  INFO 24862 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7e2f89a7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@26c3be8d, org.springframework.security.web.context.SecurityContextHolderFilter@3eabb7f, org.springframework.security.web.header.HeaderWriterFilter@23515205, org.springframework.security.web.authentication.logout.LogoutFilter@56cc140c, com.megane.usermanager.Jwt.JwtTokenFilter@464000b0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@64179463, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@68552f8e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@33100990, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7cb4a7fc, org.springframework.security.web.session.SessionManagementFilter@757dcada, org.springframework.security.web.access.ExceptionTranslationFilter@51be0cad, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6dc0351a]
+2023-07-05T15:50:21.566+07:00  WARN 24862 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-07-05T15:50:21.900+07:00  INFO 24862 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-05T15:50:21.985+07:00  INFO 24862 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-05T15:50:22.009+07:00  INFO 24862 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 14.401 seconds (process running for 15.776)
+2023-07-05T15:50:34.538+07:00  INFO 24862 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-05T15:50:34.538+07:00  INFO 24862 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-07-05T15:50:34.541+07:00  INFO 24862 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-07-05T15:50:34.562+07:00  INFO 24862 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:50:34.608+07:00  WARN 24862 --- [http-nio-8082-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T15:50:36.517+07:00  INFO 24862 --- [http-nio-8082-exec-2] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:50:36.522+07:00  WARN 24862 --- [http-nio-8082-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T15:50:37.271+07:00  INFO 24862 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T15:50:37.302+07:00  WARN 24862 --- [http-nio-8082-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T16:20:52.090+07:00  INFO 24862 --- [http-nio-8082-exec-6] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T16:21:01.118+07:00  INFO 24862 --- [http-nio-8082-exec-7] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T16:21:01.148+07:00  INFO 24862 --- [http-nio-8082-exec-8] c.megane.usermanager.Jwt.JwtTokenFilter  : Basic Y2FmZmVlZ2c5OTg6dGhpZW50b3RvMTIz
+2023-07-05T16:21:01.627+07:00  WARN 24862 --- [http-nio-8082-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T16:21:03.794+07:00  INFO 24862 --- [http-nio-8082-exec-9] c.megane.usermanager.Jwt.JwtTokenFilter  : Basic Y2FmZmVlZ2c5OTg6dGhpZW50b3RvMTIz
+2023-07-05T16:21:03.822+07:00  WARN 24862 --- [http-nio-8082-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+2023-07-05T16:21:44.434+07:00  INFO 24862 --- [http-nio-8082-exec-1] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T16:21:46.633+07:00  INFO 24862 --- [http-nio-8082-exec-2] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T16:21:46.847+07:00  INFO 24862 --- [http-nio-8082-exec-3] c.megane.usermanager.Jwt.JwtTokenFilter  : null
+2023-07-05T22:57:35.733+07:00  WARN 24862 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6h1m20s175ms).
+2023-07-05T22:58:33.963+07:00  WARN 24862 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Retrograde clock change detected (housekeeper delta=28s219ms), soft-evicting connections from pool.

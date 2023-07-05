@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/api/bookmanager/")
 public class BookController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class BookController {
 //        return new BookDTO(book);
 //    }
 
-    @PostMapping("/")
+    @PostMapping("/add-book")
     public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
         bookService.create(bookDTO);
         return ResponseDTO.<Void>builder()
@@ -43,20 +43,14 @@ public class BookController {
                 .msg("ok").build();
     }
 
-    @GetMapping("/list")
-    // @RolesAllowed({"ROLE_ADMIN","ROLE_SYSADMIN"})		  //
-    // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/list-book")
     public ResponseDTO<List<BookDTO>> list() {
         List<BookDTO> bookDTOs = bookService.getAll();
         return ResponseDTO.<List<BookDTO>>builder().status(200).data(bookDTOs).build();
     }
 
-    @GetMapping("/") // ?id=1000
+    @GetMapping("/get-book/") // ?id=1000
     @ResponseStatus(code = HttpStatus.OK)
-    // @Secured({"ROLE_ADMIN","ROLE_SYSADMIN"}) //ROLE_   //hAI dONG NAY GIONG NHAU //Bao mat tren ham
-    // @RolesAllowed({"ROLE_ADMIN","ROLE_SYSADMIN"})		  //
-    // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")		  //
-    //@PreAuthorize("isAuthenticated()")			      //
     public ResponseDTO<BookDTO> get(
             @RequestParam("id") int id) {
         return ResponseDTO.<BookDTO>builder()

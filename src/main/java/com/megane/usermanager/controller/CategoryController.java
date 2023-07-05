@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books/category")
+@RequestMapping("/api/bookmanager/")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @PostMapping("/")
+    @PostMapping("/add-category")
     public ResponseDTO<Void> create(@ModelAttribute @Valid CategoryDTO categoryDTO){
         categoryService.create(categoryDTO);
         return ResponseDTO.<Void>builder()
@@ -33,7 +33,7 @@ public class CategoryController {
 //                .msg("ok").build();
 //    }
 
-    @DeleteMapping("/") // ?id=1000
+    @DeleteMapping("/delete-category/") // ?id=1000
     @ResponseStatus(code = HttpStatus.OK)
     public ResponseDTO<Void> delete(@RequestParam("id") int id) {
         categoryService.delete(id);
@@ -41,7 +41,7 @@ public class CategoryController {
                 .msg("ok").build();
     }
 
-    @GetMapping("/") // ?id=1000
+    @GetMapping("/get-category/") // ?id=1000
     @ResponseStatus(code = HttpStatus.OK)
     // @Secured({"ROLE_ADMIN","ROLE_SYSADMIN"}) //ROLE_   //hAI dONG NAY GIONG NHAU //Bao mat tren ham
     // @RolesAllowed({"ROLE_ADMIN","ROLE_SYSADMIN"})		  //
@@ -56,7 +56,7 @@ public class CategoryController {
                 .build();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list-category")
     // @RolesAllowed({"ROLE_ADMIN","ROLE_SYSADMIN"})		  //
     // @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseDTO<List<CategoryDTO>> list() {
@@ -64,7 +64,7 @@ public class CategoryController {
         return ResponseDTO.<List<CategoryDTO>>builder().status(200).data(departmentDTOs).build();
     }
 
-    @PutMapping("/")
+    @PutMapping("/edit-category/")
     public ResponseDTO<CategoryDTO> edit(@RequestParam @Valid CategoryDTO categoryDTO) {
         categoryService.update(categoryDTO);
         return ResponseDTO.<CategoryDTO>builder()
@@ -73,7 +73,7 @@ public class CategoryController {
                 .build();
     }
 
-    @PostMapping("/search") // jackson
+    @PostMapping("/search-category") // jackson
     public ResponseDTO<PageDTO<List<CategoryDTO>>>
     search(@RequestBody @Valid SearchDTO searchDTO) {
         PageDTO<List<CategoryDTO>> pageDTO = categoryService.search(searchDTO);
