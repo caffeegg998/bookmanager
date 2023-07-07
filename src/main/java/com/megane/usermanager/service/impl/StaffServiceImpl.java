@@ -1,19 +1,15 @@
-package com.megane.usermanager.service.implmethod;
+package com.megane.usermanager.service.impl;
 
-import com.megane.usermanager.dto.CustomerDTO;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.StaffDTO;
 import com.megane.usermanager.entity.Staff;
-import com.megane.usermanager.repo.CustomerRepo;
 import com.megane.usermanager.repo.StaffRepo;
-import com.megane.usermanager.repo.UserRepo;
-import com.megane.usermanager.service.itfmethod.StaffService;
+import com.megane.usermanager.service.interf.StaffService;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

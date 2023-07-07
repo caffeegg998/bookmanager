@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Book {
+public class Book extends TimeAuditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,14 +35,14 @@ public class Book {
     private int quantityInStock;
     private int quantitySold;
 
-    @CreatedDate //auto gen new date
-    @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-
-    @LastModifiedDate
-	@Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+//    @CreatedDate //auto gen new date
+//    @Column(updatable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createdAt;
+//
+//    @LastModifiedDate
+//	@Temporal(TemporalType.TIMESTAMP)
+//    private Date updatedAt;
     // Constructors, getters, and setters
 
     // ...

@@ -1,6 +1,5 @@
-package com.megane.usermanager.service.itfmethod;
+package com.megane.usermanager.service.interf;
 
-import com.megane.usermanager.dto.CustomerDTO;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.StaffDTO;

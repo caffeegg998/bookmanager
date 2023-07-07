@@ -1,4 +1,4 @@
-package com.megane.usermanager.service.itfmethod;
+package com.megane.usermanager.service.interf;
 
 import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.PageDTO;

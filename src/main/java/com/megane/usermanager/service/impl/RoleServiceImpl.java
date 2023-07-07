@@ -1,13 +1,11 @@
-package com.megane.usermanager.service.implmethod;
+package com.megane.usermanager.service.impl;
 
-import com.megane.usermanager.dto.CategoryDTO;
 import com.megane.usermanager.dto.RoleDTO;
 import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.repo.RoleRepo;
-import com.megane.usermanager.service.itfmethod.RoleService;
+import com.megane.usermanager.service.interf.RoleService;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

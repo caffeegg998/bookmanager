@@ -1,4 +1,4 @@
-package com.megane.usermanager.service.implmethod;
+package com.megane.usermanager.service.impl;
 
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
@@ -6,7 +6,7 @@ import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.entity.User;
 import com.megane.usermanager.repo.UserRepo;
-import com.megane.usermanager.service.itfmethod.UserService;
+import com.megane.usermanager.service.interf.UserService;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +70,15 @@ class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepo.findById(id).orElseThrow(NoResultException::new);
         return convert(user);
     }
+
+    @Override
+    public UserDTO findByUsername(String username) { // java8, optinal
+        User user = userRepo.findByUsername(username);
+        if (user == null)
+            throw new NoResultException();
+        return new ModelMapper().map(user, UserDTO.class);
+    }
+
     private UserDTO convert(User user){
         return new ModelMapper().map(user,UserDTO.class);
     }
@@ -91,4 +100,5 @@ class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(username,
                 userEntity.getPassword(), authorities);
     }
+
 }

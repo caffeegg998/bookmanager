@@ -2,7 +2,7 @@ package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.ResponseDTO;
-import com.megane.usermanager.service.itfmethod.BookService;
+import com.megane.usermanager.service.interf.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

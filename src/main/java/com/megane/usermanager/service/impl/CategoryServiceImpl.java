@@ -1,11 +1,11 @@
-package com.megane.usermanager.service.implmethod;
+package com.megane.usermanager.service.impl;
 
 import com.megane.usermanager.dto.CategoryDTO;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.entity.Category;
 import com.megane.usermanager.repo.CategoryRepo;
-import com.megane.usermanager.service.itfmethod.CategoryService;
+import com.megane.usermanager.service.interf.CategoryService;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.UserDTO;
-import com.megane.usermanager.service.itfmethod.UserService;
+import com.megane.usermanager.service.interf.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

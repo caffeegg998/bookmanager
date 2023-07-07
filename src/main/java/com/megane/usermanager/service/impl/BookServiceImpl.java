@@ -1,11 +1,11 @@
-package com.megane.usermanager.service.implmethod;
+package com.megane.usermanager.service.impl;
 
 import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.entity.Book;
 import com.megane.usermanager.repo.BookRepo;
-import com.megane.usermanager.service.itfmethod.BookService;
+import com.megane.usermanager.service.interf.BookService;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

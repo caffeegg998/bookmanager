@@ -4,7 +4,7 @@ import com.megane.usermanager.dto.CategoryDTO;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.SearchDTO;
-import com.megane.usermanager.service.itfmethod.CategoryService;
+import com.megane.usermanager.service.interf.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
