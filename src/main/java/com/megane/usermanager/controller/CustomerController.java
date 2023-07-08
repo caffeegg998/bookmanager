@@ -1,11 +1,19 @@
 package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.*;
+import com.megane.usermanager.entity.Customer;
+import com.megane.usermanager.event.RegistrationCompleteEvent;
+import com.megane.usermanager.registration.token.VerificationToken;
+import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import com.megane.usermanager.service.interf.CustomerService;
+import com.megane.usermanager.service.interf.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.List;
 
@@ -15,13 +23,37 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ApplicationEventPublisher publisher;
+
+    @Autowired
+    VerificationTokenRepository tokenRepository;
     @PostMapping("/")
-    public ResponseDTO<Void> create(@RequestBody @Valid CustomerDTO customerDTO){
-        customerService.create(customerDTO);
+    public ResponseDTO<Void> createRegister(@RequestBody @Valid CustomerDTO customerDTO, final HttpServletRequest request){
+        Customer customer = customerService.create(customerDTO);
+        publisher.publishEvent(new RegistrationCompleteEvent(customer.getUser(), applicationUrl(request)));
         return ResponseDTO.<Void>builder()
                 .status(200)
                 .msg("ok")
                 .build();
+    }
+    @GetMapping("/verifyEmail")
+    public String verifyEmail(@RequestParam("token") String token){
+        VerificationToken theToken = tokenRepository.findByToken(token);
+        if (theToken.getUser().isEnabled()){
+            return "Tài khoản này đã được active!";
+        }
+        String verificationResult = userService.validateToken(token);
+        if (verificationResult.equalsIgnoreCase("valid")){
+            return "Hoàn thành xác thực Email!. Bạn có thể đăng nhập vào website!";
+        }
+        return "Mã xác thực không chính xác!";
+    }
+    public String applicationUrl(HttpServletRequest request) {
+        return "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
     }
     @GetMapping("/") // ?id=1000
     @ResponseStatus(code = HttpStatus.OK)

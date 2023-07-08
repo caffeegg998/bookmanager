@@ -5,6 +5,9 @@ import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.entity.User;
+import com.megane.usermanager.registration.RegistrationRequest;
+import com.megane.usermanager.registration.token.VerificationToken;
+import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import com.megane.usermanager.repo.UserRepo;
 import com.megane.usermanager.service.interf.UserService;
 import jakarta.persistence.NoResultException;
@@ -18,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +31,8 @@ class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    VerificationTokenRepository tokenRepository;
     @Override
     public void create(UserDTO userDTO) {
         User user = new ModelMapper().map(userDTO,User.class);
@@ -77,6 +83,29 @@ class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null)
             throw new NoResultException();
         return new ModelMapper().map(user, UserDTO.class);
+    }
+
+    @Override
+    public void saveUserVerificationToken(User theUser, String token) {
+        var verificationToken = new VerificationToken(token, theUser);
+        tokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public String validateToken(String theToken) {
+        VerificationToken token = tokenRepository.findByToken(theToken);
+        if(token == null){
+            return "Invalid verification token";
+        }
+        User user = token.getUser();
+        Calendar calendar = Calendar.getInstance();
+        if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
+            tokenRepository.delete(token);
+            return "Token already expired";
+        }
+        user.setEnabled(true);
+        userRepo.save(user);
+        return "valid";
     }
 
     private UserDTO convert(User user){

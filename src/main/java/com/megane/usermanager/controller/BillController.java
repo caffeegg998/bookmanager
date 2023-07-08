@@ -8,6 +8,7 @@ import com.megane.usermanager.service.interf.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -56,7 +57,7 @@ public class BillController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO<BillDTO> add(@RequestBody @Valid BillDTO billDTO) {
 		billService.create(billDTO);
-		mailService.sendEmail("caffeegg998@gmail.com", "BILL ID " + billDTO.getId(), "Đơn hàng của bạn đươc tạo thành công");
+		mailService.sendEmail(billDTO.getUser().getEmail(), "BILL ID " + billDTO.getId(), "Đơn hàng của bạn đươc tạo thành công");
 		return ResponseDTO.<BillDTO>builder().status(200).data(billDTO).build();
 	}
 	
@@ -85,12 +86,13 @@ public class BillController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO<BillDTO> add(@RequestBody @Valid BillDTO billDTO,
 			Principal p) {
-//		SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-//		String username = p.getName();
-//		UserDTO user = userService.findByUsername(username);
-//		billDTO.setUser(user);
+		SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = p.getName();
+		UserDTO user = userService.findByUsername(username);
+		billDTO.setUser(user);
 		
 		billService.create(billDTO);
+		mailService.sendEmail("caffeegg998@gmail.com", "BILL ID " + billDTO.getId(), "Đơn hàng của bạn đươc tạo thành công");
 		return ResponseDTO.<BillDTO>builder().status(200).data(billDTO).build();
 	}
 

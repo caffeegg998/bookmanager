@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,9 +29,11 @@ class CustomerServiceImpl implements CustomerService {
     CustomerRepo customerRepo;
 
     @Override
-    public void create(CustomerDTO customerDTO) {
+    public Customer create(CustomerDTO customerDTO) {
        Customer customer = new ModelMapper().map(customerDTO,Customer.class);
+       customer.getUser().setPassword(new BCryptPasswordEncoder().encode(customer.getUser().getPassword()));
        customerRepo.save(customer);
+       return customer;
     }
 
 //    @Override

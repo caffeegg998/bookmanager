@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepo extends JpaRepository<Role,Integer> {
 
+    Role findByName(String name);
     @Query("SELECT ro FROM Role ro WHERE ro.name LIKE :ro")
     Page<Role> searchRole(@Param("ro") String name, Pageable pageable);
 

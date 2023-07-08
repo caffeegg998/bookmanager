@@ -1,5 +1,6 @@
 package com.megane.usermanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,8 @@ public class User {
     private String password;
     private String email;
     private String phoneNumber;
+
+
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String homeAddress;
@@ -29,5 +32,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     private List<Role> roles;
+
+    private boolean isEnabled = false;
 
 }

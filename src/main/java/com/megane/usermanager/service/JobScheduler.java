@@ -39,7 +39,7 @@ public class JobScheduler {
 		for (Bill b : bills) {
 			System.out.println(b.getId());
 
-			mailService.sendEmail("caffeegg998@gmail.com", "BILL ID " + b.getId(), "aa");
+			mailService.sendEmail("caffeegg998@gmail.com", "Khách hàng có ID: " + b.getId() + "vừa đặt hàng!", "aa");
 		}
 
 	}

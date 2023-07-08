@@ -57,6 +57,7 @@ public class BillServiceImpl implements BillService {
         bill.setBillItems(billItems);
         billRepo.save(bill);
         billDTO.setId(bill.getId());
+        billDTO.getUser().setEmail(bill.getUser().getEmail());
     }
 
     @Override

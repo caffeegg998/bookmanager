@@ -26,7 +26,7 @@ public class UserDTO {
     private String password;
     private String email;
     private String phoneNumber;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/YYYY")
     private Date birthDate;
     private String homeAddress;
 

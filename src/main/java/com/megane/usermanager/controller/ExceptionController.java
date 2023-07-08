@@ -1,11 +1,13 @@
 package com.megane.usermanager.controller;
 
+import com.megane.usermanager.Jwt.JwtTokenFilter;
 import com.megane.usermanager.dto.ResponseDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.NoResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ import java.util.List;
 @RestControllerAdvice
 public class ExceptionController {
 	// log, slf4j
+
+	@Autowired
+	JwtTokenFilter jwtTokenFilter;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@ExceptionHandler({ NoResultException.class, EmptyResultDataAccessException.class })
@@ -38,10 +43,15 @@ public class ExceptionController {
 		return ResponseDTO.<Void>builder().status(403).msg("Deny").build();// view
 	}
 
-	@ExceptionHandler({ ExpiredJwtException.class, MalformedJwtException.class, BadCredentialsException.class })
+	@ExceptionHandler({ ExpiredJwtException.class, MalformedJwtException.class})
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
 	public ResponseDTO<Void> unauthorized(Exception ex) {
 		return ResponseDTO.<Void>builder().status(401).msg("JWT Expired").build();// view
+	}
+	@ExceptionHandler({ BadCredentialsException.class })
+	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+	public ResponseDTO<Void> badCredential(Exception ex) {
+		return ResponseDTO.<Void>builder().status(402).msg("Thông tin đăng nhập không chính xác!").build();// view
 	}
 
 	@ExceptionHandler({ DataIntegrityViolationException.class })
@@ -71,6 +81,15 @@ public class ExceptionController {
 	public ResponseDTO<Void> exception(Exception ex) {
 		logger.error("ex: ", ex);
 		return ResponseDTO.<Void>builder().status(500).msg("SERVER ERROR").build();// view
+	}
+//	@ExceptionHandler({ Exception.class })
+	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+	public ResponseDTO<Void> noAuthentication(Exception ex){
+		logger.error("ex: ", ex );
+		if ( jwtTokenFilter == null){
+			return ResponseDTO.<Void>builder().status(402).msg("No JWT authenticate").build();// view
+		}
+		return null;
 	}
 
 }
