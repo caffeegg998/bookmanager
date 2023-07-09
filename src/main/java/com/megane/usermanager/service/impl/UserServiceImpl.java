@@ -5,7 +5,7 @@ import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.entity.User;
-import com.megane.usermanager.registration.RegistrationRequest;
+import com.megane.usermanager.registration.password.PasswordResetTokenService;
 import com.megane.usermanager.registration.token.VerificationToken;
 import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import com.megane.usermanager.repo.UserRepo;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,10 @@ class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    PasswordResetTokenService passwordResetTokenService;
+
     @Override
     public void create(UserDTO userDTO) {
         User user = new ModelMapper().map(userDTO,User.class);
@@ -84,7 +89,30 @@ class UserServiceImpl implements UserService, UserDetailsService {
             throw new NoResultException();
         return new ModelMapper().map(user, UserDTO.class);
     }
+    private UserDTO convert(User user){
+        return new ModelMapper().map(user,UserDTO.class);
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User userEntity = userRepo.findByUsername(username);
+        if(userEntity == null){
+            throw new UsernameNotFoundException("not Found");
+        }
+
+        //convert userentity -> userdetails
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        //chuyen vai tro ve quyen
+        for(Role role : userEntity.getRoles()){
+            authorities.add(new SimpleGrantedAuthority(role.getName().toString()));
+        }
+
+        return new org.springframework.security.core.userdetails.User(username,
+                userEntity.getPassword(), authorities);
+    }
+
+    //VERIFICATION TOKEN
+    //ACTIVE USER BY TOKEN
     @Override
     public void saveUserVerificationToken(User theUser, String token) {
         var verificationToken = new VerificationToken(token, theUser);
@@ -107,27 +135,29 @@ class UserServiceImpl implements UserService, UserDetailsService {
         userRepo.save(user);
         return "valid";
     }
-
-    private UserDTO convert(User user){
-        return new ModelMapper().map(user,UserDTO.class);
+    //PASSWORD RESET
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findByEmail(email);
+    }
+    @Override
+    public void resetPassword(User theUser, String newPassword) {
+        theUser.setPassword(new BCryptPasswordEncoder().encode(theUser.getPassword()));
+        userRepo.save(theUser);
+    }
+    @Override
+    public String validatePasswordResetToken(String token) {
+        return passwordResetTokenService.validatePasswordResetToken(token);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepo.findByUsername(username);
-        if(userEntity == null){
-            throw new UsernameNotFoundException("not Found");
-        }
+    public User findUserByPasswordToken(String token) {
+        return passwordResetTokenService.findUserByPasswordToken(token).get();
+    }
 
-        //convert userentity -> userdetails
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        //chuyen vai tro ve quyen
-        for(Role role : userEntity.getRoles()){
-            authorities.add(new SimpleGrantedAuthority(role.getName().toString()));
-        }
-
-        return new org.springframework.security.core.userdetails.User(username,
-                userEntity.getPassword(), authorities);
+    @Override
+    public void createPasswordResetTokenForUser(User user, String passwordResetToken) {
+        passwordResetTokenService.createPasswordResetTokenForUser(user, passwordResetToken);
     }
 
 }

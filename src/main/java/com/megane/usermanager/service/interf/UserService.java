@@ -7,6 +7,7 @@ import com.megane.usermanager.entity.User;
 import com.megane.usermanager.registration.RegistrationRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
@@ -17,6 +18,19 @@ public interface UserService {
     PageDTO<List<UserDTO>> searchName(SearchDTO searchDTO);
     UserDTO getById(int id);
     UserDTO findByUsername(String username);
+
+    //ACTIVE USER BY TOKEN
     void saveUserVerificationToken(User theUser, String token);
     String validateToken(String theToken);
+
+    Optional<User> findByEmail(String email);
+
+    //REQUEST PASSWORD RESET
+    void resetPassword(User theUser, String newPassword);
+
+    String validatePasswordResetToken(String token);
+
+    User findUserByPasswordToken(String token);
+
+    void createPasswordResetTokenForUser(User user, String passwordResetToken);
 }

@@ -2,22 +2,32 @@ package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.*;
 import com.megane.usermanager.entity.Customer;
+import com.megane.usermanager.entity.User;
+import com.megane.usermanager.event.PasswordRequestEvent;
 import com.megane.usermanager.event.RegistrationCompleteEvent;
+import com.megane.usermanager.event.listener.RegistrationCompleteEventListener;
+import com.megane.usermanager.registration.password.PasswordResetRequest;
 import com.megane.usermanager.registration.token.VerificationToken;
 import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import com.megane.usermanager.service.interf.CustomerService;
 import com.megane.usermanager.service.interf.UserService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/customer")
 public class CustomerController {
     @Autowired
@@ -31,6 +41,9 @@ public class CustomerController {
 
     @Autowired
     VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    RegistrationCompleteEventListener eventListener;
     @PostMapping("/")
     public ResponseDTO<Void> createRegister(@RequestBody @Valid CustomerDTO customerDTO, final HttpServletRequest request){
         Customer customer = customerService.create(customerDTO);
@@ -94,5 +107,44 @@ public class CustomerController {
                 .status(200)
                 .data(pageDTO)
                 .build();
+    }
+
+    @PostMapping("/password-reset-request")
+    public String resetPasswordRequest(@RequestBody PasswordResetRequest passwordResetRequest,
+                                       final HttpServletRequest servletRequest)
+            throws MessagingException, UnsupportedEncodingException {
+
+        Optional<User> user = userService.findByEmail(passwordResetRequest.getEmail());
+        String passwordResetUrl = "";
+        if (user.isPresent()) {
+            String passwordResetToken = UUID.randomUUID().toString();
+            userService.createPasswordResetTokenForUser(user.get(), passwordResetToken);
+            passwordResetUrl = passwordResetEmailLink(user.get(), applicationUrl(servletRequest), passwordResetToken);
+        }
+
+        return passwordResetUrl;
+    }
+
+    private String passwordResetEmailLink(User user, String applicationUrl,
+                                          String passwordToken) throws MessagingException, UnsupportedEncodingException {
+        String url = applicationUrl+"/api/customer/reset-password?token="+passwordToken;
+
+        publisher.publishEvent(new PasswordRequestEvent(user,url));
+        log.info("Click the link to reset your password :  {}", url);
+        return url;
+    }
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestBody PasswordResetRequest passwordResetRequest,
+                                @RequestParam("token") String token){
+        String tokenVerificationResult = userService.validatePasswordResetToken(token);
+        if (!tokenVerificationResult.equalsIgnoreCase("valid")) {
+            return "Invalid token password reset token";
+        }
+        Optional<User> theUser = Optional.ofNullable(userService.findUserByPasswordToken(token));
+        if (theUser.isPresent()) {
+            userService.resetPassword(theUser.get(), passwordResetRequest.getNewPassword());
+            return "Password has been reset successfully";
+        }
+        return "Invalid password reset token";
     }
 }

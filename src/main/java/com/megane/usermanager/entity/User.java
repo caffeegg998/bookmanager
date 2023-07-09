@@ -27,10 +27,10 @@ public class User {
     private Date birthDate;
     private String homeAddress;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     private boolean isEnabled = false;
