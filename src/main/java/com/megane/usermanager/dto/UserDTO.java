@@ -1,6 +1,7 @@
 package com.megane.usermanager.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.megane.usermanager.entity.Customer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
@@ -8,6 +9,7 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -29,7 +31,6 @@ public class UserDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/YYYY")
     private Date birthDate;
     private String homeAddress;
-
 
     private List<RoleDTO> roles;
 }

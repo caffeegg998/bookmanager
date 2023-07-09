@@ -2,17 +2,25 @@ package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.ResponseDTO;
+import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.service.interf.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/bookmanager/")
 public class BookController {
+
+    @Value("${upload.folder}")
+    private  String UPLOAD_FOLDER;
 
     @Autowired
     BookService bookService;
@@ -35,6 +43,28 @@ public class BookController {
 //        return new BookDTO(book);
 //    }
 
+    @PostMapping("/add-book-with-metadata")
+    public ResponseDTO<BookDTO>  add(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
+        if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
+            if (!(new File(UPLOAD_FOLDER).exists())) {
+                new File(UPLOAD_FOLDER).mkdirs();
+            }
+            String filename = bookDTO.getFile().getOriginalFilename();
+            // lay dinh dang file
+            String extension = filename.substring(filename.lastIndexOf("."));
+            // tao ten moi
+            String newFilename = UUID.randomUUID().toString() + extension;
+
+            File newFile = new File(UPLOAD_FOLDER + filename + extension);
+
+            bookDTO.getFile().transferTo(newFile);
+
+            bookDTO.setBookFilePath(newFilename);// save to db
+        }
+
+        bookService.create(bookDTO);
+        return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
+    }
     @PostMapping("/add-book")
     public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
         bookService.create(bookDTO);

@@ -5105,3 +5105,37 @@ Caused by: java.lang.NumberFormatException: For input string: "favicon.ico"
 2023-07-09T12:30:36.850+07:00  INFO 8168 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-07-09T12:30:36.853+07:00  INFO 8168 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-07-09T12:30:36.862+07:00  INFO 8168 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-07-09T16:54:35.453+07:00  INFO 19872 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Starting UsermanagerApplication using Java 17.0.7 with PID 19872 (D:\IntelliJ Code\bookmanager\target\classes started by onedi in D:\IntelliJ Code\bookmanager)
+2023-07-09T16:54:35.457+07:00  INFO 19872 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-09T16:54:35.532+07:00  INFO 19872 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-07-09T16:54:35.532+07:00  INFO 19872 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-07-09T16:54:36.547+07:00  INFO 19872 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-09T16:54:36.659+07:00  INFO 19872 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 98 ms. Found 10 JPA repository interfaces.
+2023-07-09T16:54:37.614+07:00  INFO 19872 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-07-09T16:54:37.626+07:00  INFO 19872 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-09T16:54:37.626+07:00  INFO 19872 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-09T16:54:37.734+07:00  INFO 19872 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-09T16:54:37.735+07:00  INFO 19872 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2202 ms
+2023-07-09T16:54:37.912+07:00  INFO 19872 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-09T16:54:38.082+07:00  INFO 19872 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e9c0fa0
+2023-07-09T16:54:38.084+07:00  INFO 19872 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-09T16:54:38.137+07:00  INFO 19872 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-09T16:54:38.187+07:00  INFO 19872 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.2.Final
+2023-07-09T16:54:38.190+07:00  INFO 19872 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-07-09T16:54:38.338+07:00  INFO 19872 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-09T16:54:38.488+07:00  INFO 19872 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-07-09T16:54:38.528+07:00  INFO 19872 --- [restartedMain] org.hibernate.orm.dialect                : HHH035001: Using dialect: org.hibernate.dialect.MySQL8Dialect, version: 8.0
+2023-07-09T16:54:38.530+07:00  WARN 19872 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-07-09T16:54:38.831+07:00  INFO 19872 --- [restartedMain] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-07-09T16:54:39.878+07:00  INFO 19872 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-09T16:54:40.797+07:00  INFO 19872 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-09T16:54:41.405+07:00  INFO 19872 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-07-09T16:54:42.281+07:00  WARN 19872 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-09T16:54:42.623+07:00  INFO 19872 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@69285430, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@432d4d02, org.springframework.security.web.context.SecurityContextHolderFilter@1c03603e, org.springframework.security.web.header.HeaderWriterFilter@4c8f7cc3, org.springframework.security.web.authentication.logout.LogoutFilter@5c576880, com.megane.usermanager.Jwt.JwtTokenFilter@3158ad4f, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@18f65b2c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@68ba458d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@74c71380, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1e53ed7b, org.springframework.security.web.session.SessionManagementFilter@39a7a8d4, org.springframework.security.web.access.ExceptionTranslationFilter@6d3e40b3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5ddc515d]
+2023-07-09T16:54:43.064+07:00  INFO 19872 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-07-09T16:54:43.102+07:00  INFO 19872 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2023-07-09T16:54:43.114+07:00  INFO 19872 --- [restartedMain] c.m.usermanager.UsermanagerApplication   : Started UsermanagerApplication in 8.198 seconds (process running for 8.978)
+2023-07-09T16:54:43.116+07:00  INFO 19872 --- [restartedMain] com.megane.usermanager.DataInjection     : BEGIN INSERT ROLE DUMP
+2023-07-09T16:55:10.367+07:00  INFO 19872 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-09T16:55:10.370+07:00  INFO 19872 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-07-09T16:55:10.378+07:00  INFO 19872 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
