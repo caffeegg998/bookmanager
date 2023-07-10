@@ -4,6 +4,7 @@ import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.service.interf.BookService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,28 +45,44 @@ public class BookController {
 //        return new BookDTO(book);
 //    }
 
-    @PostMapping("/add-book-with-metadata")
+    @PostMapping("/add-book-file")
     public ResponseDTO<BookDTO>  add(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
         if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
             if (!(new File(UPLOAD_FOLDER).exists())) {
                 new File(UPLOAD_FOLDER).mkdirs();
             }
+//            String filename = bookDTO.getFile().getOriginalFilename();
+//            // lay dinh dang file
+//            String extension = filename.substring(filename.lastIndexOf("."));
+//            // tao ten moi
+//            String newFilename = UUID.randomUUID().toString() + extension;
+//            File newFile = new File(UPLOAD_FOLDER + filename + extension);
+//            bookDTO.getFile().transferTo(newFile);
+//            bookDTO.setBookFilePath(newFilename);// save to db
             String filename = bookDTO.getFile().getOriginalFilename();
             // lay dinh dang file
             String extension = filename.substring(filename.lastIndexOf("."));
             // tao ten moi
             String newFilename = UUID.randomUUID().toString() + extension;
 
-            File newFile = new File(UPLOAD_FOLDER + filename + extension);
+            File newFile = new File(UPLOAD_FOLDER + newFilename);
 
             bookDTO.getFile().transferTo(newFile);
 
             bookDTO.setBookFilePath(newFilename);// save to db
+
         }
 
         bookService.create(bookDTO);
         return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
+
+    @GetMapping("/download/{filename}")
+    public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
+        File file = new File(UPLOAD_FOLDER + filename);
+        Files.copy(file.toPath(), response.getOutputStream());
+    }
+
     @PostMapping("/add-book")
     public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
         bookService.create(bookDTO);

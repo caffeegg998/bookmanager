@@ -28,18 +28,12 @@ public class DataInjection implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		// insert data demo into data
 		log.info("BEGIN INSERT ROLE DUMP");
-		Role roleAdmin = new Role();
-		roleAdmin.setName("ROLE_ADMIN");
-		Role roleCustomer = new Role();
-		roleCustomer.setName("ROLE_CUSTOMER");
-		Role roleStaff = new Role();
-		roleStaff.setName("ROLE_STAFF");
-		Role roleGuest = new Role();
-		roleGuest.setName("ROLE_GUEST");
-		if (roleRepo.findByName(roleAdmin.getName()) == null ) {
+		Role role = new Role();
+		role.setName("ROLE_ADMIN");
+		if (roleRepo.findByName(role.getName()) == null ) {
 			try {
-				log.info("INSERT DUMP" + roleAdmin.getId());
-				roleRepo.save(roleAdmin);
+				log.info("INSERT DUMP" + role.getId());
+				roleRepo.save(role);
 				User user = new User();
 				user.setUsername("sysadmin");
 				user.setPassword(new BCryptPasswordEncoder().encode("123456"));
@@ -47,7 +41,7 @@ public class DataInjection implements ApplicationRunner {
 				user.setEmail("caffeegg998@gmail.com");
 				user.setPhoneNumber("0348533336");
 				user.setBirthDate(new Date());
-				user.setRoles(Arrays.asList(roleAdmin));
+				user.setRoles(Arrays.asList(role));
 
 				
 				userRepo.save(user);

@@ -58,7 +58,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         String mailContent = "<p> Xin chào!, "+ theUser.getFullName()+ ", </p>"+
                 "<p>Cảm ơn bạn đã đăng ký,"+"" +
                 "Hãy nhấn vào đường link để hoàn tất đăng ký.</p>"+
-                "<a href=\"" +url+ "\">Xác thực email để kích hoạt tài khoản</a>"+
+                "<a href=\"" +url+ "\">Xác thực!</a>"+
                 "<p> Cảm ơn bạn! <br> Cổng đăng ký người dùng";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);

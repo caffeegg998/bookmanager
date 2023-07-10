@@ -1,6 +1,7 @@
 package com.megane.usermanager;
 
 //import com.megane.usermanager.security.SecurityInterceptor;
+import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableScheduling
+@OpenAPI30
 public class UsermanagerApplication {
 
 //	@Autowired

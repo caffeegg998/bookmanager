@@ -92,7 +92,7 @@ public class BillController {
 		billDTO.setUser(user);
 		
 		billService.create(billDTO);
-		mailService.sendEmail("caffeegg998@gmail.com", "BILL ID " + billDTO.getId(), "Đơn hàng của bạn đươc tạo thành công");
+		mailService.sendEmail(billDTO.getUser().getEmail(), "BILL ID " + billDTO.getId(), "Xin chao!" +billDTO.getUser().getFullName() +"</br>" +"Đơn hàng của bạn đươc tạo thành công");
 		return ResponseDTO.<BillDTO>builder().status(200).data(billDTO).build();
 	}
 
@@ -111,7 +111,7 @@ public class BillController {
 		return ResponseDTO.<BillDTO>builder().status(200).data(BillDTO).build();
 	}
 
-	@GetMapping("/statistic") // 10
+	@GetMapping("/bill/statistic") // 10
 	public ResponseDTO<PageDTO<List<BillStatisticDTO>>> get() {
 		PageDTO<List<BillStatisticDTO>> pageRS = billService.statistic();
 		return ResponseDTO.<PageDTO<List<BillStatisticDTO>>>builder().status(200).data(pageRS).build();

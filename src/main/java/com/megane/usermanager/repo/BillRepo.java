@@ -24,7 +24,7 @@ public interface BillRepo extends JpaRepository<Bill, Integer> {
 			+ "FROM Bill bi GROUP BY month(bi.createdAt), year(bi.createdAt) ")
 	List<Object[]> thongKeBill();
 
-	@Query("SELECT new com.megane.usermanager.dto.BillDTO(count(bi.id), '/') "
-			+ " FROM Bill bi GROUP BY month(bi.createdAt), year(bi.createdAt) ")
-	List<BillStatisticDTO> thongKeBill2();
+//	@Query("SELECT new com.megane.usermanager.dto.BillDTO(count(bi.id), '/') "
+//			+ " FROM Bill bi GROUP BY month(bi.createdAt), year(bi.createdAt) ")
+//	List<BillStatisticDTO> thongKeBill2();
 }
