@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/bookmanager/")
+@RequestMapping("/api/book/")
 public class BookController {
 
     @Value("${upload.folder}")
@@ -51,14 +51,7 @@ public class BookController {
             if (!(new File(UPLOAD_FOLDER).exists())) {
                 new File(UPLOAD_FOLDER).mkdirs();
             }
-//            String filename = bookDTO.getFile().getOriginalFilename();
-//            // lay dinh dang file
-//            String extension = filename.substring(filename.lastIndexOf("."));
-//            // tao ten moi
-//            String newFilename = UUID.randomUUID().toString() + extension;
-//            File newFile = new File(UPLOAD_FOLDER + filename + extension);
-//            bookDTO.getFile().transferTo(newFile);
-//            bookDTO.setBookFilePath(newFilename);// save to db
+
             String filename = bookDTO.getFile().getOriginalFilename();
             // lay dinh dang file
             String extension = filename.substring(filename.lastIndexOf("."));
@@ -69,14 +62,52 @@ public class BookController {
 
             bookDTO.getFile().transferTo(newFile);
 
-            bookDTO.setBookFilePath(newFilename);// save to db
+            bookDTO.setBookUrl(newFilename);// save to db
+
+        }
+        if (bookDTO.getFile2() != null && !bookDTO.getFile2().isEmpty()) {
+            if (!(new File(UPLOAD_FOLDER).exists())) {
+                new File(UPLOAD_FOLDER).mkdirs();
+            }
+
+            String filename = bookDTO.getFile2().getOriginalFilename();
+            // lay dinh dang file
+            String extension = filename.substring(filename.lastIndexOf("."));
+            // tao ten moi
+            String newFilename = UUID.randomUUID().toString() + extension;
+
+            File newFile = new File(UPLOAD_FOLDER + newFilename);
+
+            bookDTO.getFile2().transferTo(newFile);
+
+            bookDTO.setCoverUrl(newFilename);
 
         }
 
         bookService.create(bookDTO);
         return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
+    @PutMapping("/")
+    public ResponseDTO<Void> update(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
+        if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
+            String filename = bookDTO.getFile().getOriginalFilename();
+            // lay dinh dang file
+            String extension = filename.substring(filename.lastIndexOf("."));
+            // tao ten moi
+            String newFilename = UUID.randomUUID().toString() + extension;
 
+            File newFile = new File(UPLOAD_FOLDER + newFilename);
+
+            bookDTO.getFile().transferTo(newFile);
+
+            bookDTO.setBookUrl(newFilename);// save to db
+            bookDTO.setCoverUrl(newFilename);
+        }
+
+        bookService.update(bookDTO);
+
+        return ResponseDTO.<Void>builder().status(200).build();
+    }
     @GetMapping("/download/{filename}")
     public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
         File file = new File(UPLOAD_FOLDER + filename);

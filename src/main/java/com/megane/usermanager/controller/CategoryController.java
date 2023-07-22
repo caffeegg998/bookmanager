@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bookmanager/")
+@RequestMapping("/api/book/category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;

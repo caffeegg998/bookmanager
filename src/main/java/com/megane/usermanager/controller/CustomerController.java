@@ -1,6 +1,8 @@
 package com.megane.usermanager.controller;
 
 import com.megane.usermanager.dto.*;
+import com.megane.usermanager.dto.kafka.MessageDTO;
+import com.megane.usermanager.dto.kafka.StatisticDTO;
 import com.megane.usermanager.entity.Customer;
 import com.megane.usermanager.entity.User;
 import com.megane.usermanager.event.PasswordRequestEvent;
@@ -18,13 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.context.ApplicationEventPublisher;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -44,9 +44,25 @@ public class CustomerController {
 
     @Autowired
     RegistrationCompleteEventListener eventListener;
+
+    @Autowired
+    KafkaTemplate<String, Object> kafkaTemplate;
     @PostMapping("/")
     public ResponseDTO<Void> createRegister(@RequestBody @Valid CustomerDTO customerDTO, final HttpServletRequest request){
         Customer customer = customerService.create(customerDTO);
+
+
+        //Kafka
+//        StatisticDTO statisticDTO = new StatisticDTO("Account: " + customerDTO.getUser().getEmail() + "is created",new Date());
+//        MessageDTO messageDTO = new MessageDTO();
+//        messageDTO.setTo(customerDTO.getUser().getEmail());
+//        messageDTO.setToName(customerDTO.getUser().getFullName());
+//        messageDTO.setSubject("Cai nay la de test Kafka!");
+//        messageDTO.setContent("Kafka test la cai nay nay!");
+//
+//        kafkaTemplate.send("notification",messageDTO);
+//        kafkaTemplate.send("statistic",statisticDTO);
+
         publisher.publishEvent(new RegistrationCompleteEvent(customer.getUser(), applicationUrl(request)));
         return ResponseDTO.<Void>builder()
                 .status(200)
@@ -62,6 +78,10 @@ public class CustomerController {
         String verificationResult = userService.validateToken(token);
         if (verificationResult.equalsIgnoreCase("valid")){
             return "Hoàn thành xác thực Email!. Bạn có thể đăng nhập vào website!";
+        }
+        if (verificationResult.equalsIgnoreCase("Token already expired"))
+        {
+            return "Mã xác thực đã hết hạn";
         }
         return "Mã xác thực không chính xác!";
     }

@@ -32,15 +32,14 @@ class BookServiceImpl implements BookService {
     public void update(BookDTO bookDTO) {
         Book currentBook = bookRepo.findById(bookDTO.getId()).orElse(null);
         if(currentBook != null){
-            currentBook.setIsbn(bookDTO.getIsbn());
+            currentBook.setTitle(bookDTO.getTitle());
             currentBook.setAuthor(bookDTO.getAuthor());
             currentBook.setPublisher(bookDTO.getPublisher());
-            currentBook.setTitle(bookDTO.getTitle());
             currentBook.setPublicationYear(bookDTO.getPublicationYear());
-            currentBook.setQuantityInStock(bookDTO.getQuantityInStock());
-            currentBook.setQuantitySold(bookDTO.getQuantitySold());
-            currentBook.setUpdatedAt(bookDTO.getUpdatedAt());
-            currentBook.setCategory(bookDTO.getCategory());
+            currentBook.setSubject(bookDTO.getSubject());
+            currentBook.setDescription(bookDTO.getDescription());
+            currentBook.setFormat(bookDTO.getFormat());
+            currentBook.setSeries(bookDTO.getSeries());
         }
     }
 
@@ -101,26 +100,26 @@ class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void sellBook(Book book, int quantity) {
-        // Kiểm tra số lượng sách trong kho đủ để bán không
-        if (book.getQuantityInStock() >= quantity) {
-            // Cập nhật số lượng sách trong kho và số lượng đã bán
-            int newQuantityInStock = book.getQuantityInStock() - quantity;
-            int newQuantitySold = book.getQuantitySold() + quantity;
-            book.setQuantityInStock(newQuantityInStock);
-            book.setQuantitySold(newQuantitySold);
-            // Lưu thông tin cập nhật vào CSDL
-            bookRepo.save(book);
-        } else {
-            // Xử lý logic khi số lượng sách trong kho không đủ để bán
-        }
-    }
-    @Override
-    public void checkStockLevel(Book book) {
-        int minStockLevel = 10; // Số lượng tối thiểu để cảnh báo
-        if (book.getQuantityInStock() < minStockLevel) {
-            // Gửi cảnh báo hoặc xử lý logic tương ứng
-        }
-    }
+//    @Override
+//    public void sellBook(Book book, int quantity) {
+//        // Kiểm tra số lượng sách trong kho đủ để bán không
+//        if (book.getQuantityInStock() >= quantity) {
+//            // Cập nhật số lượng sách trong kho và số lượng đã bán
+//            int newQuantityInStock = book.getQuantityInStock() - quantity;
+//            int newQuantitySold = book.getQuantitySold() + quantity;
+//            book.setQuantityInStock(newQuantityInStock);
+//            book.setQuantitySold(newQuantitySold);
+//            // Lưu thông tin cập nhật vào CSDL
+//            bookRepo.save(book);
+//        } else {
+//            // Xử lý logic khi số lượng sách trong kho không đủ để bán
+//        }
+//    }
+//    @Override
+//    public void checkStockLevel(Book book) {
+//        int minStockLevel = 10; // Số lượng tối thiểu để cảnh báo
+//        if (book.getQuantityInStock() < minStockLevel) {
+//            // Gửi cảnh báo hoặc xử lý logic tương ứng
+//        }
+//    }
 }

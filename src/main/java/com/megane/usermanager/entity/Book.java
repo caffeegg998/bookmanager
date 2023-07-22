@@ -27,13 +27,23 @@ public class Book extends TimeAuditable{
 
     private String title;
     private String author;
+    private String lang;
     private String publisher;
     private int publicationYear;
+    private String subject;//tags
 
-    @Column(unique = true)
-    private String isbn;
-    private int quantityInStock;
-    private int quantitySold;
+    @Column(length = 1200)
+    private String description;
+    private String format;
+    private String series;
+
+    private String coverUrl;
+    private String bookUrl;
+
+//    @Column(unique = true)
+//    private String isbn;
+//    private int quantityInStock;
+//    private int quantitySold;
 
 //    @CreatedDate //auto gen new date
 //    @Column(updatable = false)

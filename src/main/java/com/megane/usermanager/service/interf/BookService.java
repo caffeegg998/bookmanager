@@ -15,7 +15,7 @@ public interface BookService {
 
     PageDTO<List<BookDTO>> search(SearchDTO searchDTO);
     PageDTO<List<BookDTO>> getBooksByTitleOrAuthor(SearchDTO searchDTO);
-    void sellBook(Book book, int quantity);
-    void checkStockLevel(Book book);
+//    void sellBook(Book book, int quantity);
+//    void checkStockLevel(Book book);
     List<BookDTO> getAll();
 }

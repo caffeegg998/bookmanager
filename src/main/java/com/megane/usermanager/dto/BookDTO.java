@@ -2,6 +2,7 @@ package com.megane.usermanager.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.megane.usermanager.entity.Category;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,20 +17,26 @@ public class BookDTO {
 
     private List<Category> category;
 
-    @NotBlank
     private String title;
     private String author;
+    private String lang;
     private String publisher;
     private int publicationYear;
+    private String subject;//tags
 
-    private String isbn;
-    private int quantityInStock;
-    private int quantitySold;
 
-    private String bookFilePath;
+    private String description;
+    private String format;
+    private String series;
+
+    private String bookUrl;
+    private String coverUrl;
 
     @JsonIgnore
     private MultipartFile file;
+
+    @JsonIgnore
+    private MultipartFile file2;
 
     private Date createdAt;//java.util
     private Date updatedAt;

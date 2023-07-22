@@ -1,5 +1,6 @@
 package com.megane.usermanager.event.listener;
 
+import com.megane.usermanager.dto.kafka.MessageDTO;
 import com.megane.usermanager.entity.User;
 import com.megane.usermanager.event.PasswordRequestEvent;
 import com.megane.usermanager.event.RegistrationCompleteEvent;
@@ -10,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
@@ -30,6 +34,11 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     @Autowired
     JavaMailSender mailSender;
 
+    @Autowired
+    KafkaTemplate<String, Object> kafkaTemplate;
+
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     private User theUser;
     @Override
@@ -53,19 +62,33 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 
 
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-        String subject = "Xác thực Email";
-        String senderName = "Cổng dịch vụ BookBoot";
-        String mailContent = "<p> Xin chào!, "+ theUser.getFullName()+ ", </p>"+
-                "<p>Cảm ơn bạn đã đăng ký,"+"" +
-                "Hãy nhấn vào đường link để hoàn tất đăng ký.</p>"+
-                "<a href=\"" +url+ "\">Xác thực!</a>"+
-                "<p> Cảm ơn bạn! <br> Cổng đăng ký người dùng";
-        MimeMessage message = mailSender.createMimeMessage();
-        var messageHelper = new MimeMessageHelper(message);
-        messageHelper.setFrom("caffeegg998@gmail.com", senderName);
-        messageHelper.setTo(theUser.getEmail());
-        messageHelper.setSubject(subject);
-        messageHelper.setText(mailContent, true);
-        mailSender.send(message);
+//        String subject = "Xác thực Email";
+//        String senderName = "Cổng dịch vụ BookBoot";
+//        String mailContent = "<p> Xin chào!, "+ theUser.getFullName()+ ", </p>"+
+//                "<p>Cảm ơn bạn đã đăng ký,"+"" +
+//                "Hãy nhấn vào đường link để hoàn tất đăng ký.</p>"+
+//                "<a href=\"" +url+ "\">Xác thực!</a>"+
+//                "<p> Cảm ơn bạn! <br> Cổng đăng ký người dùng";
+//        MimeMessage message = mailSender.createMimeMessage();
+//        var messageHelper = new MimeMessageHelper(message);
+//        messageHelper.setFrom("caffeegg998@gmail.com", senderName);
+//        messageHelper.setTo(theUser.getEmail());
+//        messageHelper.setSubject(subject);
+//        messageHelper.setText(mailContent, true);
+//        mailSender.send(message);
+
+        Context context = new Context();
+        context.setVariable("name",theUser.getFullName());
+        context.setVariable("content",url);
+        String html = templateEngine.process("xacthuc",context);
+
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setTo(theUser.getEmail());
+        messageDTO.setToName(theUser.getFullName());
+        messageDTO.setSubject("\uD83D\uDE80 Kích hoạt tài khoản !");
+        messageDTO.setContent(html);
+
+        kafkaTemplate.send("notification",messageDTO);
+
     }
 }
