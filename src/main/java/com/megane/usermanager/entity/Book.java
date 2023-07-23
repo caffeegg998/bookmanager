@@ -32,7 +32,7 @@ public class Book extends TimeAuditable{
     private int publicationYear;
     private String subject;//tags
 
-    @Column(length = 1200)
+    @Column(length = 4000)
     private String description;
     private String format;
     private String series;

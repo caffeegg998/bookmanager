@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -111,6 +112,24 @@ public class BookController {
     @GetMapping("/download/{filename}")
     public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
         File file = new File(UPLOAD_FOLDER + filename);
+        if (!file.exists()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        String fileExtension = filename.substring(filename.lastIndexOf(".") + 1);
+
+        // Set các thông số cho response
+        if ("jpeg".equalsIgnoreCase(fileExtension) || "jpg".equalsIgnoreCase(fileExtension)) {
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        } else if ("png".equalsIgnoreCase(fileExtension)) {
+            response.setContentType(MediaType.IMAGE_PNG_VALUE);
+        } else {
+            // Nếu định dạng không hợp lệ, trả về lỗi không hỗ trợ định dạng này
+            response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+            return;
+        }
+        response.setContentLengthLong(file.length()); // Kích thước của file
+        response.setHeader("Content-Disposition", "inline; filename=" + filename); // Hiển thị ảnh trực tiếp trên trình duyệt
         Files.copy(file.toPath(), response.getOutputStream());
     }
 
