@@ -89,7 +89,8 @@ public class BookController {
         return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
     @PutMapping("/")
-    public ResponseDTO<Void> update(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
+    @CrossOrigin(origins = "http://localhost:5173")
+    public ResponseDTO<BookDTO> update(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
         if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
             String filename = bookDTO.getFile().getOriginalFilename();
             // lay dinh dang file
@@ -104,10 +105,28 @@ public class BookController {
             bookDTO.setBookUrl(newFilename);// save to db
             bookDTO.setCoverUrl(newFilename);
         }
+        if (bookDTO.getFile2() != null && !bookDTO.getFile2().isEmpty()) {
+            if (!(new File(UPLOAD_FOLDER).exists())) {
+                new File(UPLOAD_FOLDER).mkdirs();
+            }
+
+            String filename = bookDTO.getFile2().getOriginalFilename();
+            // lay dinh dang file
+            String extension = filename.substring(filename.lastIndexOf("."));
+            // tao ten moi
+            String newFilename = UUID.randomUUID().toString() + extension;
+
+            File newFile = new File(UPLOAD_FOLDER + newFilename);
+
+            bookDTO.getFile2().transferTo(newFile);
+
+            bookDTO.setCoverUrl(newFilename);
+
+        }
 
         bookService.update(bookDTO);
 
-        return ResponseDTO.<Void>builder().status(200).build();
+        return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
     @GetMapping("/download/{filename}")
     public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
@@ -168,15 +187,12 @@ public class BookController {
 //        }
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteBook(@PathVariable("id") Long id) {
-//        boolean deleted = bookService.deleteBook(id);
-//        if (deleted) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:5173")
+    public ResponseDTO<Void> deleteBook(@PathVariable("id") int id) {
+        bookService.delete(id);
+        return ResponseDTO.<Void>builder().status(200).build();
+    }
 //
 //    @GetMapping("/search")
 //    public List<BookDTO> searchBooks(@RequestParam(required = false) String keyword) {

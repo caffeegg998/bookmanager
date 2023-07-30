@@ -29,17 +29,17 @@ public class UsermanagerApplication {
 //	public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(securityInterceptor);
 //	}
-	@Bean
-	NewTopic notification(){
-		return new NewTopic("notification",2,(short) 1);
-	}
+//	@Bean
+//	NewTopic notification(){
+//		return new NewTopic("notification",2,(short) 1);
+//	}
 //	@Bean
 //	NewTopic notificationPassword(){
 //		return new NewTopic("notificationPassword",2,(short) 1);
 //	}
 
-	@Bean
-	NewTopic status(){
-		return new NewTopic("statistic",1,(short) 1);
-	}
+//	@Bean
+//	NewTopic status(){
+//		return new NewTopic("statistic",1,(short) 1);
+//	}
 }
