@@ -40,6 +40,12 @@ class BookServiceImpl implements BookService {
             currentBook.setDescription(bookDTO.getDescription());
             currentBook.setFormat(bookDTO.getFormat());
             currentBook.setSeries(bookDTO.getSeries());
+            currentBook.setCategory(bookDTO.getCategory());
+            bookRepo.save(currentBook);
+            if(bookDTO.getCoverUrl() !=null){
+                currentBook.setCoverUrl(bookDTO.getCoverUrl());
+                bookRepo.save(currentBook);
+            }
         }
     }
 

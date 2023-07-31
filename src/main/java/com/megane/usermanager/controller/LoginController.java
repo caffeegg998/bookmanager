@@ -3,6 +3,8 @@ package com.megane.usermanager.controller;
 import com.megane.usermanager.Jwt.JwtTokenService;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.TokenResponseDTO;
+import com.megane.usermanager.dto.UserDTO;
+import com.megane.usermanager.service.interf.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,11 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController //Rest API
-@RequestMapping
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
@@ -25,6 +28,9 @@ public class LoginController {
 
     @Autowired
     JwtTokenService jwtTokenService;
+
+    @Autowired
+    UserService userService;
     //java annotation
     // @GetMapping("/login")
     // public String login() {
@@ -42,14 +48,18 @@ public class LoginController {
 
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(e -> e.getAuthority()).collect(Collectors.toList());
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + 1 * 60 * 1000);
+        UserDTO user = userService.findByUsername(username);
 
         String accessToken = jwtTokenService.createToken(username, authorities);
         String refreshToken = jwtTokenService.createRefreshToken(username, authorities);
 
         TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
-
+        tokenResponseDTO.setAccessTokenExpired(exp);
         tokenResponseDTO.setAccessToken(accessToken);
         tokenResponseDTO.setRefreshToken(refreshToken);
+        tokenResponseDTO.setFullName(user.getFullName());
 
         return ResponseDTO.<TokenResponseDTO>builder()
                 .status(200)
