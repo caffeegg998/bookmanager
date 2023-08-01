@@ -23,7 +23,7 @@ public class JwtTokenService {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("authorities", authority);
         Date now = new Date();
-        Date exp = new Date(now.getTime() + 1 * 60 * 1000);
+        Date exp = new Date(now.getTime() + 10 * 60 * 1000);
         String accessToken = Jwts.builder().setClaims(claims).setIssuedAt(now)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, secretKey)

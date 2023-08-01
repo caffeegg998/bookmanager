@@ -67,21 +67,28 @@ public class LoginController {
                 .build();
     }
     @PostMapping("/access-token")
-    public ResponseDTO<?> refreshAccessToken(@RequestHeader("Authorization") String refreshTokenHeader) {
+    public ResponseDTO<TokenResponseDTO> refreshAccessToken(@RequestHeader("Authorization") String refreshTokenHeader) {
         // Trích xuất refreshToken từ header Authorization
         String refreshToken = extractRefreshTokenFromHeader(refreshTokenHeader);
+
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + 10 * 60 * 1000);
 
         // Tiếp tục xử lý như trước
         String newAccessToken = jwtTokenService.refreshAccessToken(refreshToken);
 
+        TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
+        tokenResponseDTO.setAccessToken(newAccessToken);
+        tokenResponseDTO.setAccessTokenExpired(exp);
+
         if (newAccessToken != null) {
-            return ResponseDTO.<String>builder()
+            return ResponseDTO.<TokenResponseDTO>builder()
                     .status(200)
-                    .data(newAccessToken)
+                    .data(tokenResponseDTO)
                     .build();
         } else {
             // Trả về thông báo lỗi nếu không cấp được access token mới từ refresh token
-            return ResponseDTO.<String>builder()
+            return ResponseDTO.<TokenResponseDTO>builder()
                     .status(401)
                     .msg("Invalid refresh token.")
                     .build();

@@ -45,8 +45,8 @@ public class BookController {
 //        }
 //        return new BookDTO(book);
 //    }
-
-    @PostMapping("/add-book-file")
+//    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping("/member/add-book-filee")
     public ResponseDTO<BookDTO>  add(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
         if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
             if (!(new File(UPLOAD_FOLDER).exists())) {
@@ -88,8 +88,8 @@ public class BookController {
         bookService.create(bookDTO);
         return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
-    @PutMapping("/")
-    @CrossOrigin(origins = "http://localhost:5173")
+    @PutMapping("/member/update-book")
+//    @CrossOrigin(origins = "http://localhost:5173")
     public ResponseDTO<BookDTO> update(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
         if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
             String filename = bookDTO.getFile().getOriginalFilename();
@@ -187,7 +187,7 @@ public class BookController {
 //        }
 //    }
 //
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/member/delete/{id}")
     @CrossOrigin(origins = "http://localhost:5173")
     public ResponseDTO<Void> deleteBook(@PathVariable("id") int id) {
         bookService.delete(id);

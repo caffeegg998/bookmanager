@@ -1,6 +1,7 @@
 package com.megane.usermanager.security;
 
 import com.megane.usermanager.Jwt.JwtTokenFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -50,10 +55,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain config(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers("/api/usermanager/**")
+                .requestMatchers("/api/book/member/**")
                 // .hasAnyRole("ADMIN")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_SUBADMIN")
-                .requestMatchers("/api/usermanager/**","/api/transactionmanager/**","/api/bookmanager/**","/admin/bill/")
+                .requestMatchers("")
                 .authenticated()
                 .requestMatchers("/staff/**")
                 // .hasAnyRole("ADMIN")
@@ -74,7 +79,20 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .csrf((csrf) -> csrf.disable())
-                .httpBasic(withDefaults());
+                .httpBasic(withDefaults())
+                .cors((cors) -> cors.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration configuration = new CorsConfiguration();
+                        configuration.setAllowedOrigins(Arrays.asList("*"));
+                        configuration.setAllowedMethods(Arrays.asList("*"));
+                        configuration.setAllowedHeaders(Arrays.asList("*"));
+                        return configuration;
+                    }
+                }));
+
+
         //apply filter
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
