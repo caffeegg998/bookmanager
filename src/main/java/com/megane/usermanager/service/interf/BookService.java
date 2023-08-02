@@ -14,6 +14,8 @@ public interface BookService {
     BookDTO getById(int id);
 
     PageDTO<List<BookDTO>> search(SearchDTO searchDTO);
+
+    public List<BookDTO> getBooksByBookCreator(String bookCreator);
     PageDTO<List<BookDTO>> getBooksByTitleOrAuthor(SearchDTO searchDTO);
 //    void sellBook(Book book, int quantity);
 //    void checkStockLevel(Book book);

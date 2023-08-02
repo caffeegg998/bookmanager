@@ -49,7 +49,7 @@ public class LoginController {
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(e -> e.getAuthority()).collect(Collectors.toList());
         Date now = new Date();
-        Date exp = new Date(now.getTime() + 1 * 60 * 1000);
+        Date exp = new Date(now.getTime() + 10 * 60 * 1000);
         UserDTO user = userService.findByUsername(username);
 
         String accessToken = jwtTokenService.createToken(username, authorities);
@@ -60,7 +60,7 @@ public class LoginController {
         tokenResponseDTO.setAccessToken(accessToken);
         tokenResponseDTO.setRefreshToken(refreshToken);
         tokenResponseDTO.setFullName(user.getFullName());
-
+        tokenResponseDTO.setUserName(username);
         return ResponseDTO.<TokenResponseDTO>builder()
                 .status(200)
                 .data(tokenResponseDTO)

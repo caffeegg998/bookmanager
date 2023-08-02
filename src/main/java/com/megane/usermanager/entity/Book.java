@@ -39,6 +39,7 @@ public class Book extends TimeAuditable{
 
     private String coverUrl;
     private String bookUrl;
+    private String bookCreator;
 
 //    @Column(unique = true)
 //    private String isbn;

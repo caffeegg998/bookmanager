@@ -22,6 +22,16 @@ public class TokenResponseDTO {
     public String refreshToken;
     public String fullName;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String userName;
+
     public String getFullName() {
         return fullName;
     }

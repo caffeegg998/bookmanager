@@ -1,9 +1,12 @@
 package com.megane.usermanager.controller;
 
+import com.megane.usermanager.Jwt.JwtTokenService;
 import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.UserDTO;
+import com.megane.usermanager.entity.Book;
 import com.megane.usermanager.service.interf.BookService;
+import com.megane.usermanager.service.interf.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class BookController {
     private  String UPLOAD_FOLDER;
 
     @Autowired
+    JwtTokenService jwtTokenService;
+    @Autowired
     BookService bookService;
 
 
@@ -46,8 +51,10 @@ public class BookController {
 //        return new BookDTO(book);
 //    }
 //    @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/member/add-book-filee")
-    public ResponseDTO<BookDTO>  add(@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
+    @PostMapping("/member/add-book-file")
+    public ResponseDTO<BookDTO>  add(@RequestHeader("Authorization") String authorizationHeader,@ModelAttribute @Valid BookDTO bookDTO) throws IllegalStateException, IOException {
+        String bearerToken = authorizationHeader.replace("Bearer ", "");
+        String username = jwtTokenService.getUsername(bearerToken);
         if (bookDTO.getFile() != null && !bookDTO.getFile().isEmpty()) {
             if (!(new File(UPLOAD_FOLDER).exists())) {
                 new File(UPLOAD_FOLDER).mkdirs();
@@ -84,9 +91,10 @@ public class BookController {
             bookDTO.setCoverUrl(newFilename);
 
         }
+        bookDTO.setBookCreator(username);
 
         bookService.create(bookDTO);
-        return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
+        return ResponseDTO.<BookDTO>builder().status(200).whoDidIt(username).data(bookDTO).build();
     }
     @PutMapping("/member/update-book")
 //    @CrossOrigin(origins = "http://localhost:5173")
@@ -163,6 +171,12 @@ public class BookController {
     @GetMapping("/list-book")
     public ResponseDTO<List<BookDTO>> list() {
         List<BookDTO> bookDTOs = bookService.getAll();
+        return ResponseDTO.<List<BookDTO>>builder().status(200).data(bookDTOs).build();
+    }
+
+    @GetMapping("/list-book-by-creator/")
+    public ResponseDTO<List<BookDTO>> listBookByCreator(@RequestParam("creator") String creator) {
+        List<BookDTO> bookDTOs = bookService.getBooksByBookCreator(creator);
         return ResponseDTO.<List<BookDTO>>builder().status(200).data(bookDTOs).build();
     }
 

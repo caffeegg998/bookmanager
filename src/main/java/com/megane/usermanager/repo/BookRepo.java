@@ -1,5 +1,6 @@
 package com.megane.usermanager.repo;
 
+import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,8 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE b.title LIKE :b OR b.author LIKE :b")
     Page<Book> findByTitleOrAuthorContaining(@Param("b") String s, Pageable pageable);
+
+    @Query("SELECT b FROM Book b WHERE b.bookCreator = :bookCreatorValue")
+    List<Book> findByBookCreator(@Param("bookCreatorValue") String bookCreatorValue);
 
 }

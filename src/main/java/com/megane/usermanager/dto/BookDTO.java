@@ -23,7 +23,7 @@ public class BookDTO {
     private String publisher;
     private int publicationYear;
     private String subject;//tags
-
+    private String bookCreator;
 
     private String description;
     private String format;

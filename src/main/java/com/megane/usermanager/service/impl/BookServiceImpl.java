@@ -105,6 +105,11 @@ class BookServiceImpl implements BookService {
         return bookList.stream().map(b -> convert(b))
                 .collect(Collectors.toList());
     }
+    public List<BookDTO> getBooksByBookCreator(String bookCreator) {
+        List<Book> bookList = bookRepo.findByBookCreator(bookCreator);
+        return bookList.stream().map(b -> convert(b))
+                .collect(Collectors.toList());
+    }
 
 //    @Override
 //    public void sellBook(Book book, int quantity) {

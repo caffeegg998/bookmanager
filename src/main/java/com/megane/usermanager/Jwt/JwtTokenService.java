@@ -29,18 +29,19 @@ public class JwtTokenService {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
         return accessToken;
-    }public String refreshToken(String username, List<String> authority){
-        Claims claims = Jwts.claims().setSubject(username);
-        claims.put("authorities", authority);
-        Date now = new Date();
-        Date exp = new Date(now.getTime() + 5 * 60 * 1000);
-
-        String refreshToken = Jwts.builder().setSubject(username).setIssuedAt(now)
-                .setExpiration(exp)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-        return refreshToken;
     }
+//    public String refreshToken(String username, List<String> authority){
+//        Claims claims = Jwts.claims().setSubject(username);
+//        claims.put("authorities", authority);
+//        Date now = new Date();
+//        Date exp = new Date(now.getTime() + 5 * 60 * 1000);
+//
+//        String refreshToken = Jwts.builder().setSubject(username).setIssuedAt(now)
+//                .setExpiration(exp)
+//                .signWith(SignatureAlgorithm.HS256, secretKey)
+//                .compact();
+//        return refreshToken;
+//    }
 
 
     public boolean inValidToken(String token){
@@ -69,7 +70,7 @@ public class JwtTokenService {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("authorities", authority);
         Date now = new Date();
-        Date exp = new Date(now.getTime() + 10 * 60 * 1000); // Đặt thời gian hết hạn cho refresh token mới
+        Date exp = new Date(now.getTime() + 20 * 60 * 1000); // Đặt thời gian hết hạn cho refresh token mới
 
         String refreshToken = Jwts.builder().setClaims(claims).setIssuedAt(now)
                 .setExpiration(exp)
