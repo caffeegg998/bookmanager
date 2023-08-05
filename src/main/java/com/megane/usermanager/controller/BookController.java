@@ -160,13 +160,13 @@ public class BookController {
         Files.copy(file.toPath(), response.getOutputStream());
     }
 
-    @PostMapping("/add-book")
-    public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
-        bookService.create(bookDTO);
-        return ResponseDTO.<Void>builder()
-                .status(200)
-                .msg("ok").build();
-    }
+//    @PostMapping("/add-book")
+//    public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
+//        bookService.create(bookDTO);
+//        return ResponseDTO.<Void>builder()
+//                .status(200)
+//                .msg("ok").build();
+//    }
 
     @GetMapping("/list-book")
     public ResponseDTO<List<BookDTO>> list() {

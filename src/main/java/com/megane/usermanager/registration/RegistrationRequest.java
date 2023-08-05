@@ -15,6 +15,7 @@ public record RegistrationRequest(
         String phoneNumber,
         Date birthDate,
         String homeAddress,
-        List<String> roles)
+        List<String> roles
+)
 {
 }

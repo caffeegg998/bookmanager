@@ -48,23 +48,34 @@ public class LoginController {
 
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(e -> e.getAuthority()).collect(Collectors.toList());
-        Date now = new Date();
-        Date exp = new Date(now.getTime() + 10 * 60 * 1000);
+
         UserDTO user = userService.findByUsername(username);
+        if(!user.isEnabled())
+        {
+            return ResponseDTO.<TokenResponseDTO>builder()
+                    .status(200)
+                    .whoDidIt(username)
+                    .msg("Tài khoản chưa được active!")
+                    .build();
+        }
+        else {
+            Date now = new Date();
+            Date exp = new Date(now.getTime() + 10 * 60 * 1000);
+            String accessToken = jwtTokenService.createToken(username, authorities);
+            String refreshToken = jwtTokenService.createRefreshToken(username, authorities);
 
-        String accessToken = jwtTokenService.createToken(username, authorities);
-        String refreshToken = jwtTokenService.createRefreshToken(username, authorities);
+            TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
+            tokenResponseDTO.setAccessTokenExpired(exp);
+            tokenResponseDTO.setAccessToken(accessToken);
+            tokenResponseDTO.setRefreshToken(refreshToken);
+            tokenResponseDTO.setFullName(user.getFullName());
+            tokenResponseDTO.setUserName(username);
+            return ResponseDTO.<TokenResponseDTO>builder()
+                    .status(200)
+                    .data(tokenResponseDTO)
+                    .build();
+        }
 
-        TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
-        tokenResponseDTO.setAccessTokenExpired(exp);
-        tokenResponseDTO.setAccessToken(accessToken);
-        tokenResponseDTO.setRefreshToken(refreshToken);
-        tokenResponseDTO.setFullName(user.getFullName());
-        tokenResponseDTO.setUserName(username);
-        return ResponseDTO.<TokenResponseDTO>builder()
-                .status(200)
-                .data(tokenResponseDTO)
-                .build();
     }
     @PostMapping("/access-token")
     public ResponseDTO<TokenResponseDTO> refreshAccessToken(@RequestHeader("Authorization") String refreshTokenHeader) {

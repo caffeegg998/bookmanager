@@ -5,6 +5,8 @@ import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.User;
 import com.megane.usermanager.registration.RegistrationRequest;
+import com.megane.usermanager.registration.password.PasswordResetToken;
+import com.megane.usermanager.registration.token.VerificationToken;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,4 +35,6 @@ public interface UserService {
     User findUserByPasswordToken(String token);
 
     void createPasswordResetTokenForUser(User user, String passwordResetToken);
+    VerificationToken generateNewVerificationToken(String oldToken);
+    PasswordResetToken generateNewResetPasswordToken(String oldToken);
 }

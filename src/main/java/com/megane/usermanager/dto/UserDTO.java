@@ -33,4 +33,6 @@ public class UserDTO {
     private String homeAddress;
 
     private List<RoleDTO> roles;
+
+    private boolean isEnabled = false;
 }

@@ -1,8 +1,6 @@
 package com.megane.usermanager.event.listener;
 
-import com.megane.usermanager.dto.kafka.MessageDTO;
 import com.megane.usermanager.entity.User;
-import com.megane.usermanager.event.PasswordRequestEvent;
 import com.megane.usermanager.event.RegistrationCompleteEvent;
 import com.megane.usermanager.service.interf.UserService;
 import jakarta.mail.MessagingException;
@@ -50,10 +48,11 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         //3. Save the verification token for the user
         userService.saveUserVerificationToken(theUser, verificationToken);
         //4 Build the verification url to be sent to the user
-        String url = event.getApplicationUrl()+"/api/customer/verifyEmail?token="+verificationToken;
+//        String url = event.getApplicationUrl()+"/api/customer/verifyEmail?token="+verificationToken;
+        String url = verificationToken;
         //5. Send the email.
         try {
-            sendVerificationEmail(url);
+            sendVerificationEmail(theUser,url);
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -61,9 +60,9 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     }
 
 
-    public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-//        String subject = "Xác thực Email";
-//        String senderName = "Cổng dịch vụ BookBoot";
+    public void sendVerificationEmail(User user,String url) throws MessagingException, UnsupportedEncodingException {
+        String subject = "\\uD83D\\uDE80 Kích hoạt tài khoản !";
+        String senderName = "Cổng dịch vụ BookBoot";
 //        String mailContent = "<p> Xin chào!, "+ theUser.getFullName()+ ", </p>"+
 //                "<p>Cảm ơn bạn đã đăng ký,"+"" +
 //                "Hãy nhấn vào đường link để hoàn tất đăng ký.</p>"+
@@ -78,17 +77,25 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
 //        mailSender.send(message);
 
         Context context = new Context();
-        context.setVariable("name",theUser.getFullName());
+        context.setVariable("name",user.getFullName());
         context.setVariable("content",url);
         String html = templateEngine.process("xacthuc",context);
+        MimeMessage message = mailSender.createMimeMessage();
 
-        MessageDTO messageDTO = new MessageDTO();
-        messageDTO.setTo(theUser.getEmail());
-        messageDTO.setToName(theUser.getFullName());
-        messageDTO.setSubject("\uD83D\uDE80 Kích hoạt tài khoản !");
-        messageDTO.setContent(html);
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom("caffeegg998@gmail.com", senderName);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(html, true);
+        mailSender.send(message);
+        //Kafka send
+//        MessageDTO messageDTO = new MessageDTO();
+//        messageDTO.setTo(theUser.getEmail());
+//        messageDTO.setToName(theUser.getFullName());
+//        messageDTO.setSubject("\uD83D\uDE80 Kích hoạt tài khoản !");
+//        messageDTO.setContent(html);
 
-        kafkaTemplate.send("notification",messageDTO);
+//        kafkaTemplate.send("notification",messageDTO);
 
     }
 }

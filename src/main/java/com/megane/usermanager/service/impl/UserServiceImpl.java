@@ -5,6 +5,8 @@ import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.entity.User;
+import com.megane.usermanager.registration.password.PasswordResetToken;
+import com.megane.usermanager.registration.password.PasswordResetTokenRepository;
 import com.megane.usermanager.registration.password.PasswordResetTokenService;
 import com.megane.usermanager.registration.token.VerificationToken;
 import com.megane.usermanager.registration.token.VerificationTokenRepository;
@@ -20,10 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +36,9 @@ class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     PasswordResetTokenService passwordResetTokenService;
+
+    @Autowired
+    PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Override
     public void create(UserDTO userDTO) {
@@ -113,6 +115,7 @@ class UserServiceImpl implements UserService, UserDetailsService {
 
     //VERIFICATION TOKEN
     //ACTIVE USER BY TOKEN
+
     @Override
     public void saveUserVerificationToken(User theUser, String token) {
         var verificationToken = new VerificationToken(token, theUser);
@@ -128,7 +131,7 @@ class UserServiceImpl implements UserService, UserDetailsService {
         User user = token.getUser();
         Calendar calendar = Calendar.getInstance();
         if ((token.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0){
-            tokenRepository.delete(token);
+//            tokenRepository.delete(token);
             return "Token already expired";
         }
         user.setEnabled(true);
@@ -142,7 +145,7 @@ class UserServiceImpl implements UserService, UserDetailsService {
     }
     @Override
     public void resetPassword(User theUser, String newPassword) {
-        theUser.setPassword(new BCryptPasswordEncoder().encode(theUser.getPassword()));
+        theUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         userRepo.save(theUser);
     }
     @Override
@@ -158,6 +161,24 @@ class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void createPasswordResetTokenForUser(User user, String passwordResetToken) {
         passwordResetTokenService.createPasswordResetTokenForUser(user, passwordResetToken);
+    }
+
+    @Override
+    public VerificationToken generateNewVerificationToken(String oldToken) {
+        VerificationToken verificationToken = tokenRepository.findByToken(oldToken);
+        var tokenExpirationTime = new VerificationToken();
+        verificationToken.setToken(UUID.randomUUID().toString());
+        verificationToken.setExpirationTime(tokenExpirationTime.getTokenExpirationTime());
+        return tokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public PasswordResetToken generateNewResetPasswordToken(String oldToken) {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(oldToken);
+        var tokenExpirationTime = new PasswordResetToken();
+        passwordResetToken.setToken(UUID.randomUUID().toString());
+        passwordResetToken.setExpirationTime(tokenExpirationTime.getTokenExpirationTime());
+        return passwordResetTokenRepository.save(passwordResetToken);
     }
 
 }

@@ -18,6 +18,7 @@ public class Customer {
     @PrimaryKeyJoinColumn
     @MapsId //copy id user set cho id cua student
     private User user;//user_id
+    @Column(unique = true)
     private String customerCode;
     // Constructors, getters, and setters
 

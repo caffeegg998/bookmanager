@@ -2,9 +2,12 @@ package com.megane.usermanager.service.impl;
 
 import com.megane.usermanager.dto.CustomerDTO;
 import com.megane.usermanager.dto.PageDTO;
+import com.megane.usermanager.dto.RoleDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.entity.Customer;
+import com.megane.usermanager.entity.Role;
 import com.megane.usermanager.repo.CustomerRepo;
+import com.megane.usermanager.repo.RoleRepo;
 import com.megane.usermanager.service.interf.CustomerService;
 import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,10 +34,17 @@ class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepo customerRepo;
 
+    @Autowired
+    RoleRepo roleRepo;
+
     @Override
     public Customer create(CustomerDTO customerDTO) {
+       List<Role> strRoles = new ArrayList<>();
+       strRoles.add(roleRepo.findById(2).orElseThrow(null));
        Customer customer = new ModelMapper().map(customerDTO,Customer.class);
        customer.getUser().setPassword(new BCryptPasswordEncoder().encode(customer.getUser().getPassword()));
+       customer.getUser().setRoles(strRoles);
+       customer.setCustomerCode(UUID.randomUUID().toString());
        customerRepo.save(customer);
        return customer;
     }
@@ -107,5 +120,10 @@ class CustomerServiceImpl implements CustomerService {
     public List<CustomerDTO> getAll() {
         List<Customer> customerList =  customerRepo.findAll();
         return customerList.stream().map(cu -> convert(cu)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CustomerDTO findByUsername(String username) {
+        return null;
     }
 }

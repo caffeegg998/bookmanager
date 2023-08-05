@@ -52,8 +52,8 @@ public class PasswordRequestEventListener implements ApplicationListener<Passwor
 
     }
     public void sendPasswordResetVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-//        String subject = "Password Reset Request Verification";
-//        String senderName = "User Registration Portal Service";
+        String subject = "Password Reset Request Verification";
+        String senderName = "User Registration Portal Service";
 //        String mailContent = "<p> Hi, "+ theUser.getFullName() + ", </p>"+
 //                "<p><b>You recently requested to reset your password,</b>"+"" +
 //                "Please, follow the link below to complete the action.</p>"+
@@ -72,12 +72,19 @@ public class PasswordRequestEventListener implements ApplicationListener<Passwor
         context.setVariable("content",url);
         String html = templateEngine.process("passwordreset",context);
 
-        MessageDTO messageDTO = new MessageDTO();
-        messageDTO.setTo(theUser.getEmail());
-        messageDTO.setToName(theUser.getFullName());
-        messageDTO.setSubject("\uD83D\uDE80 Lấy lại mật khẩu! !");
-        messageDTO.setContent(html);
-
-        kafkaTemplate.send("notification",messageDTO);
+        MimeMessage message = mailSender.createMimeMessage();
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom("caffeegg998@gmail.com", senderName);
+        messageHelper.setTo(theUser.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(html, true);
+        mailSender.send(message);
+//        MessageDTO messageDTO = new MessageDTO();
+//        messageDTO.setTo(theUser.getEmail());
+//        messageDTO.setToName(theUser.getFullName());
+//        messageDTO.setSubject("\uD83D\uDE80 Lấy lại mật khẩu! !");
+//        messageDTO.setContent(html);
+//
+//        kafkaTemplate.send("notification",messageDTO);
     }
 }

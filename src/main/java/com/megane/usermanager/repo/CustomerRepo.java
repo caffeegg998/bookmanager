@@ -2,6 +2,7 @@ package com.megane.usermanager.repo;
 
 
 import com.megane.usermanager.entity.Customer;
+import com.megane.usermanager.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,6 @@ import java.util.List;
 public interface CustomerRepo extends JpaRepository<Customer, Integer> {
     @Query("SELECT cu FROM Customer cu WHERE cu.customerCode LIKE :cu")
     Page<Customer> searchCustomer(@Param("cu") String customerCode, Pageable pageable);
+
 }
 

@@ -1,5 +1,6 @@
 package com.megane.usermanager.controller;
 
+import com.megane.usermanager.Jwt.JwtTokenService;
 import com.megane.usermanager.dto.*;
 import com.megane.usermanager.dto.kafka.MessageDTO;
 import com.megane.usermanager.dto.kafka.StatisticDTO;
@@ -9,6 +10,7 @@ import com.megane.usermanager.event.PasswordRequestEvent;
 import com.megane.usermanager.event.RegistrationCompleteEvent;
 import com.megane.usermanager.event.listener.RegistrationCompleteEventListener;
 import com.megane.usermanager.registration.password.PasswordResetRequest;
+import com.megane.usermanager.registration.password.PasswordResetToken;
 import com.megane.usermanager.registration.token.VerificationToken;
 import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import com.megane.usermanager.service.interf.CustomerService;
@@ -47,7 +49,10 @@ public class CustomerController {
 
     @Autowired
     KafkaTemplate<String, Object> kafkaTemplate;
-    @PostMapping("/")
+
+    @Autowired
+    JwtTokenService jwtTokenService;
+    @PostMapping("/register")
     public ResponseDTO<Void> createRegister(@RequestBody @Valid CustomerDTO customerDTO, final HttpServletRequest request){
         Customer customer = customerService.create(customerDTO);
 
@@ -66,24 +71,65 @@ public class CustomerController {
         publisher.publishEvent(new RegistrationCompleteEvent(customer.getUser(), applicationUrl(request)));
         return ResponseDTO.<Void>builder()
                 .status(200)
-                .msg("ok")
+                .msg("Đăng ký thành công")
                 .build();
     }
     @GetMapping("/verifyEmail")
-    public String verifyEmail(@RequestParam("token") String token){
+    public AuthResponseDTO<Void> verifyEmail(@RequestParam("token") String token,HttpServletRequest request){
         VerificationToken theToken = tokenRepository.findByToken(token);
-        if (theToken.getUser().isEnabled()){
-            return "Tài khoản này đã được active!";
-        }
+       if(theToken != null){
+           if (theToken.getUser().isEnabled()){
+               return AuthResponseDTO.<Void>builder()
+                       .status(201)
+                       .msg("200")
+                       .complete("Tài khoản đã được active!Bạn có thể đăng nhập.")
+                       .build();
+           }
+       }
+
+
         String verificationResult = userService.validateToken(token);
         if (verificationResult.equalsIgnoreCase("valid")){
-            return "Hoàn thành xác thực Email!. Bạn có thể đăng nhập vào website!";
+            return AuthResponseDTO.<Void>builder()
+                    .status(200)
+                    .msg("200")
+                    .complete("Hoàn thành xác thực Email!. Bạn có thể đăng nhập vào website!")
+                    .build();
         }
         if (verificationResult.equalsIgnoreCase("Token already expired"))
         {
-            return "Mã xác thực đã hết hạn";
+            return AuthResponseDTO.<Void>builder()
+                    .status(403)
+                    .msg("Mã xác thực đã hết hạn")
+                    .resendEmail(applicationUrl(request)+"/api/customer/resend-verification-token/?token="+token)
+                    .build();
         }
-        return "Mã xác thực không chính xác!";
+        if (verificationResult.equalsIgnoreCase("Invalid verification token"))
+        {
+            return AuthResponseDTO.<Void>builder()
+                    .status(404)
+                    .msg("Mã xác thực không chính xác")
+                    .build();
+        }
+        return null;
+
+    }
+
+    @GetMapping("/resend-verification-token/")
+    public String resendVerificationToken(@RequestParam("token") String oldToken, HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
+        VerificationToken verificationToken =  userService.generateNewVerificationToken(oldToken);
+        User theUser = verificationToken.getUser();
+        resendVerificationTokenEmail(theUser, applicationUrl(request), verificationToken);
+        return "A new verification link hs been sent to your email," +
+                " please, check to complete your registration";
+    }
+    private void resendVerificationTokenEmail(User theUser, String applicationUrl, VerificationToken token)
+            throws MessagingException, UnsupportedEncodingException {
+//        String url = applicationUrl+"/register/verifyEmail?token="+token.getToken(); //send link
+        String url = token.getToken();
+        eventListener.sendVerificationEmail(theUser,url);
+        log.info("Click the link to verify your registration :  {}", url);
     }
     public String applicationUrl(HttpServletRequest request) {
         return "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
@@ -130,41 +176,81 @@ public class CustomerController {
     }
 
     @PostMapping("/password-reset-request")
-    public String resetPasswordRequest(@RequestBody PasswordResetRequest passwordResetRequest,
+    public AuthResponseDTO<Void> resetPasswordRequest(@RequestBody PasswordResetRequest passwordResetRequest,
                                        final HttpServletRequest servletRequest)
             throws MessagingException, UnsupportedEncodingException {
 
         Optional<User> user = userService.findByEmail(passwordResetRequest.getEmail());
-        String passwordResetUrl = "";
         if (user.isPresent()) {
             String passwordResetToken = UUID.randomUUID().toString();
             userService.createPasswordResetTokenForUser(user.get(), passwordResetToken);
-            passwordResetUrl = passwordResetEmailLink(user.get(), applicationUrl(servletRequest), passwordResetToken);
+            passwordResetEmailLink(user.get(), applicationUrl(servletRequest), passwordResetToken);
+
+            return AuthResponseDTO.<Void>builder()
+                    .status(200)
+                    .complete("Yêu cầu đã được xử lý. Vui lòng kiểm tra email! ")
+                    .build();
         }
 
-        return passwordResetUrl;
+        return AuthResponseDTO.<Void>builder()
+                .status(404)
+                .msg("Email không chính xác")
+                .build();
+
     }
 
     private String passwordResetEmailLink(User user, String applicationUrl,
                                           String passwordToken) throws MessagingException, UnsupportedEncodingException {
-        String url = applicationUrl+"/api/customer/reset-password?token="+passwordToken;
+//        String url = applicationUrl+"/api/customer/reset-password?token="+passwordToken; //send link
+        String url = passwordToken;
 
         publisher.publishEvent(new PasswordRequestEvent(user,url));
-        log.info("Click the link to reset your password :  {}", url);
         return url;
     }
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestBody PasswordResetRequest passwordResetRequest,
+    public AuthResponseDTO<Void> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest,
                                 @RequestParam("token") String token){
         String tokenVerificationResult = userService.validatePasswordResetToken(token);
-        if (!tokenVerificationResult.equalsIgnoreCase("valid")) {
-            return "Invalid token password reset token";
+        if (tokenVerificationResult.equalsIgnoreCase("valid")) {
+            Optional<User> theUser = Optional.ofNullable(userService.findUserByPasswordToken(token));
+            if (theUser.isPresent()) {
+                userService.resetPassword(theUser.get(), passwordResetRequest.getNewPassword());
+                return AuthResponseDTO.<Void>builder()
+                        .status(201)
+                        .msg("Mật khẩu của bạn đã được thay đổi.")
+                        .build();
+            }
         }
-        Optional<User> theUser = Optional.ofNullable(userService.findUserByPasswordToken(token));
-        if (theUser.isPresent()) {
-            userService.resetPassword(theUser.get(), passwordResetRequest.getNewPassword());
-            return "Password has been reset successfully";
+        if (tokenVerificationResult.equalsIgnoreCase("Link already expired, resend link")) {
+            return AuthResponseDTO.<Void>builder()
+                    .status(419)
+                    .msg("Mã thay đổi mật khẩu đã hết hạn, vui lòng gửi lại yêu cầu đổi mật khẩu!")
+                    .build();
         }
-        return "Invalid password reset token";
+        return AuthResponseDTO.<Void>builder()
+                .status(498)
+                .msg("Mã thay đổi mật khẩu không chính xác!")
+                .build();
+    }
+    @GetMapping("/resend-reset-password-token/")
+    public String resendResetPasswordToken(@RequestParam("token") String oldToken, HttpServletRequest request)
+            throws MessagingException, UnsupportedEncodingException {
+        PasswordResetToken passwordResetToken =  userService.generateNewResetPasswordToken(oldToken);
+        User theUser = passwordResetToken.getUser();
+        resendResetPasswordTokenEmail(theUser, applicationUrl(request), passwordResetToken);
+        return "A new reset password link hs been sent to your email," +
+                " please, check to complete your request";
+    }
+    private void resendResetPasswordTokenEmail(User user, String applicationUrl,PasswordResetToken passwordToken)
+            throws MessagingException, UnsupportedEncodingException {
+        String url = passwordToken.getToken().toString();
+
+        publisher.publishEvent(new PasswordRequestEvent(user,url));
+    }
+    @GetMapping("/get-me/")
+    public ResponseDTO<UserDTO> getMyselfById(@RequestHeader("Authorization") String authorizationHeader){
+        String bearerToken = authorizationHeader.replace("Bearer ", "");
+        String username = jwtTokenService.getUsername(bearerToken);
+        return ResponseDTO.<UserDTO>builder().status(200).data(userService.findByUsername(username)).build();
     }
 }
