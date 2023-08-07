@@ -13,16 +13,20 @@ import com.megane.usermanager.registration.password.PasswordResetRequest;
 import com.megane.usermanager.registration.password.PasswordResetToken;
 import com.megane.usermanager.registration.token.VerificationToken;
 import com.megane.usermanager.registration.token.VerificationTokenRepository;
+import com.megane.usermanager.repo.UserRepo;
 import com.megane.usermanager.service.interf.CustomerService;
 import com.megane.usermanager.service.interf.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -31,12 +35,15 @@ import java.util.*;
 @RestController
 @Slf4j
 @RequestMapping("/api/customer")
+@Validated
 public class CustomerController {
     @Autowired
     CustomerService customerService;
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepo userRepo;
 
     @Autowired
     ApplicationEventPublisher publisher;
@@ -52,6 +59,34 @@ public class CustomerController {
 
     @Autowired
     JwtTokenService jwtTokenService;
+
+    @GetMapping("/check-exist-username")
+    public ResponseDTO<Void> checkUsername(@RequestParam @NotNull(message = "Username không được bỏ trống")
+                                               @Size(min = 6, max = 10, message = "Độ dài phải nằm trong khoảng từ 6 đến 10 ký tự")
+                                               String username){
+        if(userRepo.existsByUsername(username)){
+            return ResponseDTO.<Void>builder()
+                    .status(403)
+                    .msg("Username đã tồn tại!")
+                    .build();
+        }
+        return ResponseDTO.<Void>builder()
+                .status(200)
+                .msg("Bạn có thể sử dụng username này.")
+                .build();
+
+    }
+    @GetMapping("/check-exist-email")
+    public ResponseDTO<Void> checkEmail(@RequestParam String email){
+        if(userRepo.existsByEmail(email)){
+            return ResponseDTO.<Void>builder()
+                    .status(403)
+                    .msg("Email này đã được đăng ký ở tài khoản khác!")
+                    .build();
+        }
+        return null;
+
+    }
     @PostMapping("/register")
     public ResponseDTO<Void> createRegister(@RequestBody @Valid CustomerDTO customerDTO, final HttpServletRequest request){
         Customer customer = customerService.create(customerDTO);

@@ -9,14 +9,19 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "user",uniqueConstraints = {
+        //Cái này để định nghĩa constraint key cho cột trong bảng
+        //Không bị conflict thì check trong ExceptionController
+        @UniqueConstraint(name = "uniqueUsername", columnNames = {"username"}),
+        @UniqueConstraint(name = "UniqueEmail", columnNames = {"email"})
+})
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String fullName;
-    @Column(unique = true)
     private String username;
     private String password;
     private String email;

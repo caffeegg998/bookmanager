@@ -1,10 +1,12 @@
 package com.megane.usermanager.controller;
 
 import com.megane.usermanager.Jwt.JwtTokenFilter;
+import com.megane.usermanager.dto.AuthResponseDTO;
 import com.megane.usermanager.dto.ResponseDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.NoResultException;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class ExceptionController {
@@ -57,23 +62,44 @@ public class ExceptionController {
 	@ExceptionHandler({ DataIntegrityViolationException.class })
 	@ResponseStatus(code = HttpStatus.CONFLICT)
 	public ResponseDTO<Void> conflict(Exception ex) {
-		logger.info("ex: ", ex);
-		return ResponseDTO.<Void>builder().status(409).msg("CONFLICT").build();// view
+		if (ex.getMessage().contains("uniqueUsername")) {
+			return ResponseDTO.<Void>builder().status(408).msg("Username đã tồn tại!").build();// view
+		}
+		if (ex.getMessage().contains("UniqueEmail")) {
+			return ResponseDTO.<Void>builder().status(409).msg("Email này đã được đăng ký ở tài khoản khác!").build();// view
+		}
+		logger.info("ex: {}", ex.getMessage());
+		return ResponseDTO.<Void>builder().status(409).msg("Conflict").build();// view
+
 	}
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class })
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseDTO<Void> badInput(MethodArgumentNotValidException ex) {
+	public AuthResponseDTO<Map<String, String>> badInput(MethodArgumentNotValidException ex) {
 		List<ObjectError> errors = ex.getBindingResult().getAllErrors();
 
 		String msg = "";
 		for (ObjectError e : errors) {
 			FieldError fieldError = (FieldError) e;
 
-			msg += fieldError.getField() + ":" + e.getDefaultMessage() + ";";
+			msg += e.getDefaultMessage() + ";";
+		}
+		Map<String, String> validationErrors = new HashMap<>();
+		for (ObjectError e : errors) {
+			if (e instanceof FieldError) {
+				FieldError fieldError = (FieldError) e;
+				String field = fieldError.getField();
+				String message = e.getDefaultMessage();
+				validationErrors.put(field, message);
+			}
 		}
 
-		return ResponseDTO.<Void>builder().status(400).msg(msg).build();// view
+		return AuthResponseDTO.<Map<String, String>>builder().status(400).msg(msg).error(validationErrors).build();// view
+	}
+	@ExceptionHandler(ConstraintViolationException.class)
+	public AuthResponseDTO<String> handleConstraintViolationException(ConstraintViolationException ex) {
+		logger.error("ex: ", ex);
+		return AuthResponseDTO.<String>builder().status(400).msg("Bad Input").error(ex.getMessage()).build();// view
 	}
 
 	@ExceptionHandler({ Exception.class })

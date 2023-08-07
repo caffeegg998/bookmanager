@@ -17,5 +17,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
     @Query("SELECT cu FROM Customer cu WHERE cu.customerCode LIKE :cu")
     Page<Customer> searchCustomer(@Param("cu") String customerCode, Pageable pageable);
 
+
+
 }
 

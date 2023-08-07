@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController //Rest API
 @RequestMapping("/api")
+
 public class LoginController {
 
     @Autowired
@@ -45,7 +46,6 @@ public class LoginController {
             @RequestParam("password") String password) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(e -> e.getAuthority()).collect(Collectors.toList());
 
@@ -53,7 +53,7 @@ public class LoginController {
         if(!user.isEnabled())
         {
             return ResponseDTO.<TokenResponseDTO>builder()
-                    .status(200)
+                    .status(403)
                     .whoDidIt(username)
                     .msg("Tài khoản chưa được active!")
                     .build();
