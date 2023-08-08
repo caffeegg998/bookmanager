@@ -44,19 +44,32 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         // 1. Get the newly registered user
         theUser = event.getUser();
         //2. Create a verification token for the user
-        String verificationToken = UUID.randomUUID().toString();
-        //3. Save the verification token for the user
-        userService.saveUserVerificationToken(theUser, verificationToken);
-        //4 Build the verification url to be sent to the user
+        if(event.getApplicationUrl() != null){
+            try {
+                sendVerificationEmail(theUser, event.getApplicationUrl());
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            log.info("Mã kích hoạt tài khoản:  {}", event.getApplicationUrl());
+            return;
+        }else {
+            String verificationToken = UUID.randomUUID().toString();
+            //3. Save the verification token for the user
+            userService.saveUserVerificationToken(theUser, verificationToken);
+            //4 Build the verification url to be sent to the user
 //        String url = event.getApplicationUrl()+"/api/customer/verifyEmail?token="+verificationToken;
-        String url = verificationToken;
-        //5. Send the email.
-        try {
-            sendVerificationEmail(theUser,url);
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            String url = verificationToken;
+            //5. Send the email.
+            try {
+                sendVerificationEmail(theUser,url);
+            } catch (MessagingException | UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            log.info("Click the link to verify your registration :  {}", url);
         }
-        log.info("Click the link to verify your registration :  {}", url);
+
     }
 
 

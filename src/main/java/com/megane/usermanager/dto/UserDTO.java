@@ -32,7 +32,7 @@ public class UserDTO {
     @NotBlank(message = "Tên đăng nhập không được bỏ trống.")
     private String username;
 
-    @Size(min = 6, max = 10, message = "Độ dài Password phải nằm trong khoảng 6 đến 10 ký tự.")
+    @Size(min = 8, max = 32, message = "Độ dài Password phải nằm trong khoảng 8 đến 32 ký tự.")
     @NotBlank(message = "Mật khẩu không được bỏ trống.")
     private String password;
 

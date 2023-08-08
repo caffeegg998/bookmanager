@@ -35,6 +35,7 @@ public interface UserService {
     User findUserByPasswordToken(String token);
 
     void createPasswordResetTokenForUser(User user, String passwordResetToken);
+    void createActiveTokenForUser(User user, String activeToken);
     VerificationToken generateNewVerificationToken(String oldToken);
     PasswordResetToken generateNewResetPasswordToken(String oldToken);
 }

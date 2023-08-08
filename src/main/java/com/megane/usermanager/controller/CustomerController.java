@@ -62,7 +62,7 @@ public class CustomerController {
 
     @GetMapping("/check-exist-username")
     public ResponseDTO<Void> checkUsername(@RequestParam @NotNull(message = "Username không được bỏ trống")
-                                               @Size(min = 6, max = 10, message = "Độ dài phải nằm trong khoảng từ 6 đến 10 ký tự")
+                                               @Size(min = 6, max = 30, message = "Độ dài phải nằm trong khoảng từ 6 đến 10 ký tự")
                                                String username){
         if(userRepo.existsByUsername(username)){
             return ResponseDTO.<Void>builder()
@@ -149,7 +149,29 @@ public class CustomerController {
         return null;
 
     }
+    @PostMapping("/active-account-request")
+    public AuthResponseDTO<Void> activeAcountRequest(@RequestBody PasswordResetRequest passwordResetRequest,
+                                                      final HttpServletRequest servletRequest)
+            throws MessagingException, UnsupportedEncodingException {
 
+        Optional<User> user = userService.findByEmail(passwordResetRequest.getEmail());
+        if (user.isPresent()) {
+            String activeAccountRequest = UUID.randomUUID().toString();
+            userService.createActiveTokenForUser(user.get(), activeAccountRequest);
+            activeTokenEmailLink(user.get(), applicationUrl(servletRequest), activeAccountRequest);
+
+            return AuthResponseDTO.<Void>builder()
+                    .status(200)
+                    .complete("Yêu cầu đã được xử lý. Vui lòng kiểm tra email! ")
+                    .build();
+        }
+
+        return AuthResponseDTO.<Void>builder()
+                .status(404)
+                .msg("Email không chính xác")
+                .build();
+
+    }
     @GetMapping("/resend-verification-token/")
     public String resendVerificationToken(@RequestParam("token") String oldToken, HttpServletRequest request)
             throws MessagingException, UnsupportedEncodingException {
@@ -240,6 +262,14 @@ public class CustomerController {
         String url = passwordToken;
 
         publisher.publishEvent(new PasswordRequestEvent(user,url));
+        return url;
+    }
+    private String activeTokenEmailLink(User user, String applicationUrl,
+                                          String passwordToken) throws MessagingException, UnsupportedEncodingException {
+//        String url = applicationUrl+"/api/customer/reset-password?token="+passwordToken; //send link
+        String url = passwordToken;
+
+        publisher.publishEvent(new RegistrationCompleteEvent(user,url));
         return url;
     }
     @PostMapping("/reset-password")

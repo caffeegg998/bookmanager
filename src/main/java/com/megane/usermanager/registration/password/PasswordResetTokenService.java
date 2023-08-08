@@ -1,6 +1,8 @@
 package com.megane.usermanager.registration.password;
 
 import com.megane.usermanager.entity.User;
+import com.megane.usermanager.registration.token.VerificationToken;
+import com.megane.usermanager.registration.token.VerificationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class PasswordResetTokenService {
     @Autowired
     PasswordResetTokenRepository passwordResetTokenRepository;
 
+    @Autowired
+    VerificationTokenRepository tokenRepository;
+
 
     public void createPasswordResetTokenForUser(User user, String passwordToken) {
         PasswordResetToken existingToken = passwordResetTokenRepository.findAllByUserId(user.getId());
@@ -27,6 +32,22 @@ public class PasswordResetTokenService {
             // Nếu chưa tồn tại bản ghi, tạo một bản ghi mới
             PasswordResetToken passwordRestToken = new PasswordResetToken(passwordToken, user);
             passwordResetTokenRepository.save(passwordRestToken);
+        }
+
+    }
+
+    public void createActiveTokenForUser(User user, String activeToken) {
+
+        VerificationToken existingToken = tokenRepository.findAllByUserId(user.getId());
+        if (existingToken != null) {
+            // Nếu đã tồn tại bản ghi, cập nhật thông tin của nó
+            existingToken.setToken(activeToken);
+            existingToken.setExpirationTime(existingToken.getTokenExpirationTime());
+            tokenRepository.save(existingToken);
+        } else {
+            // Nếu chưa tồn tại bản ghi, tạo một bản ghi mới
+            VerificationToken passwordRestToken = new VerificationToken(activeToken, user);
+            tokenRepository.save(passwordRestToken);
         }
 
     }

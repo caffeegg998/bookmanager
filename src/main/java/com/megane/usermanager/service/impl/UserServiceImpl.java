@@ -164,6 +164,11 @@ class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void createActiveTokenForUser(User user, String activeToken) {
+        passwordResetTokenService.createActiveTokenForUser(user, activeToken);
+    }
+
+    @Override
     public VerificationToken generateNewVerificationToken(String oldToken) {
         VerificationToken verificationToken = tokenRepository.findByToken(oldToken);
         var tokenExpirationTime = new VerificationToken();
