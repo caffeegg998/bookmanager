@@ -1,5 +1,6 @@
 package com.megane.usermanager.service.impl;
 
+import com.megane.usermanager.dto.CurrentUser;
 import com.megane.usermanager.dto.PageDTO;
 import com.megane.usermanager.dto.SearchDTO;
 import com.megane.usermanager.dto.UserDTO;
@@ -109,8 +110,13 @@ class UserServiceImpl implements UserService, UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.getName().toString()));
         }
 
-        return new org.springframework.security.core.userdetails.User(username,
-                userEntity.getPassword(), authorities);
+        CurrentUser currentUser = new CurrentUser(username, userEntity.getPassword(), authorities);
+        currentUser.setId(userEntity.getId());
+        currentUser.setName(userEntity.getFullName());
+
+        return currentUser;
+//        return new org.springframework.security.core.userdetails.User(username,
+//                userEntity.getPassword(), authorities);
     }
 
     //VERIFICATION TOKEN

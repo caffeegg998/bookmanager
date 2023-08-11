@@ -162,7 +162,7 @@ public class CustomerController {
 
             return AuthResponseDTO.<Void>builder()
                     .status(200)
-                    .complete("Yêu cầu đã được xử lý. Vui lòng kiểm tra email! ")
+                    .complete("Yêu cầu đã được xử lý. Vui lòng kiểm tra email ")
                     .build();
         }
 
@@ -273,8 +273,9 @@ public class CustomerController {
         return url;
     }
     @PostMapping("/reset-password")
-    public AuthResponseDTO<Void> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest,
-                                @RequestParam("token") String token){
+    public AuthResponseDTO<Void> resetPassword(@RequestParam("token") @NotNull(message = "Bạn phải nhập token lấy từ email đăng ký của tài khoản")
+                                                   String token,@RequestBody @Valid PasswordResetRequest passwordResetRequest
+                                ){
         String tokenVerificationResult = userService.validatePasswordResetToken(token);
         if (tokenVerificationResult.equalsIgnoreCase("valid")) {
             Optional<User> theUser = Optional.ofNullable(userService.findUserByPasswordToken(token));

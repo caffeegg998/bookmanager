@@ -18,6 +18,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Sampson Alfred
@@ -43,8 +45,12 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         // 1. Get the newly registered user
         theUser = event.getUser();
+        String applicationUrl = event.getApplicationUrl();
+        String uuidPattern = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
+        Pattern pattern = Pattern.compile(uuidPattern, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(applicationUrl);
         //2. Create a verification token for the user
-        if(event.getApplicationUrl() != null){
+        if(matcher.matches()){
             try {
                 sendVerificationEmail(theUser, event.getApplicationUrl());
             } catch (MessagingException e) {

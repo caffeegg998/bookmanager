@@ -1,6 +1,7 @@
 package com.megane.usermanager.controller;
 
 import com.megane.usermanager.Jwt.JwtTokenService;
+import com.megane.usermanager.dto.CurrentUser;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.TokenResponseDTO;
 import com.megane.usermanager.dto.UserDTO;
@@ -9,12 +10,15 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,7 +109,25 @@ public class LoginController {
                     .build();
         }
     }
-
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public CurrentUser me(Principal p,
+                           // doc userdetails tra ve tu ham
+                           // userDetailsService.loadUserByUsername(username);
+                           // da hinh ep kieu ve loai class con
+                           @AuthenticationPrincipal CurrentUser user) {
+//		String username = p.getName();
+//		UserDTO user = userService.findByUsername(username);
+//		return user;
+//		return (LoginUserDTO) SecurityContextHolder.getContext().getAuthentication()
+//				.getPrincipal();
+        return user;
+    }
+//    @GetMapping("/me")
+//    @PreAuthorize("isAuthenticated()")
+//    public CurrentUser me(Principal p) {
+//        return (CurrentUser) p;
+//    }
     private String extractRefreshTokenFromHeader(String refreshTokenHeader) {
         // Loại bỏ phần tử "Bearer " trong header để chỉ lấy refreshToken
         return refreshTokenHeader.replace("Bearer ", "");
