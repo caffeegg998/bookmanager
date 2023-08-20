@@ -41,6 +41,7 @@ public class BookDTO {
     private Date createdAt;//java.util
     private Date updatedAt;
 
+    private int downloadCount;
     // Constructors, getters, and setters
 
     // ...

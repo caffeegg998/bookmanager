@@ -17,13 +17,13 @@ public class JwtTokenService {
     @Value("${jwt.secret:123}")
     private String secretKey;
 
-    private long validity = 5;
+    private long validity = 60;
 
     public String createToken(String username, List<String> authority){
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("authorities", authority);
         Date now = new Date();
-        Date exp = new Date(now.getTime() + 10 * 60 * 1000);
+        Date exp = new Date(now.getTime() + validity * 60 * 1000);
         String accessToken = Jwts.builder().setClaims(claims).setIssuedAt(now)
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS256, secretKey)

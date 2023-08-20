@@ -25,6 +25,10 @@ public class Book extends TimeAuditable{
     @ManyToMany
     private List<Category> category;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Rating> ratings;
+
+
     private String title;
     private String author;
     private String lang;
@@ -41,6 +45,7 @@ public class Book extends TimeAuditable{
     private String bookUrl;
     private String bookCreator;
 
+    private int downloadCount;
 //    @Column(unique = true)
 //    private String isbn;
 //    private int quantityInStock;

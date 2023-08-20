@@ -20,4 +20,8 @@ public interface BookRepo extends JpaRepository<Book, Integer> {
     @Query("SELECT b FROM Book b WHERE b.bookCreator = :bookCreatorValue")
     List<Book> findByBookCreator(@Param("bookCreatorValue") String bookCreatorValue);
 
+    Book findByBookUrl(String bookurl);
+
+
+
 }

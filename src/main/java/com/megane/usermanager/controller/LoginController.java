@@ -64,7 +64,7 @@ public class LoginController {
         }
         else {
             Date now = new Date();
-            Date exp = new Date(now.getTime() + 10 * 60 * 1000);
+            Date exp = new Date(now.getTime() + 60 * 60 * 1000);
             String accessToken = jwtTokenService.createToken(username, authorities);
             String refreshToken = jwtTokenService.createRefreshToken(username, authorities);
 
@@ -111,7 +111,7 @@ public class LoginController {
     }
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public CurrentUser me(Principal p,
+    public CurrentUser me(
                            // doc userdetails tra ve tu ham
                            // userDetailsService.loadUserByUsername(username);
                            // da hinh ep kieu ve loai class con

@@ -5,6 +5,7 @@ import com.megane.usermanager.dto.BookDTO;
 import com.megane.usermanager.dto.ResponseDTO;
 import com.megane.usermanager.dto.UserDTO;
 import com.megane.usermanager.entity.Book;
+import com.megane.usermanager.repo.BookRepo;
 import com.megane.usermanager.service.interf.BookService;
 import com.megane.usermanager.service.interf.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +33,9 @@ public class BookController {
     JwtTokenService jwtTokenService;
     @Autowired
     BookService bookService;
+
+    @Autowired
+    BookRepo bookRepo;
 
 
 //    @GetMapping
@@ -136,29 +140,31 @@ public class BookController {
 
         return ResponseDTO.<BookDTO>builder().status(200).data(bookDTO).build();
     }
-    @GetMapping("/download/{filename}")
-    public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
-        File file = new File(UPLOAD_FOLDER + filename);
-        if (!file.exists()) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
-        String fileExtension = filename.substring(filename.lastIndexOf(".") + 1);
 
-        // Set các thông số cho response
-        if ("jpeg".equalsIgnoreCase(fileExtension) || "jpg".equalsIgnoreCase(fileExtension)) {
-            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        } else if ("png".equalsIgnoreCase(fileExtension)) {
-            response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        } else {
-            // Nếu định dạng không hợp lệ, trả về lỗi không hỗ trợ định dạng này
-            response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-            return;
-        }
-        response.setContentLengthLong(file.length()); // Kích thước của file
-        response.setHeader("Content-Disposition", "inline; filename=" + filename); // Hiển thị ảnh trực tiếp trên trình duyệt
-        Files.copy(file.toPath(), response.getOutputStream());
-    }
+    //Only ảnh
+//    @GetMapping("/download/{filename}")
+//    public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
+//        File file = new File(UPLOAD_FOLDER + filename);
+//        if (!file.exists()) {
+//            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//            return;
+//        }
+//        String fileExtension = filename.substring(filename.lastIndexOf(".") + 1);
+//
+//        // Set các thông số cho response
+//        if ("jpeg".equalsIgnoreCase(fileExtension) || "jpg".equalsIgnoreCase(fileExtension)) {
+//            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+//        } else if ("png".equalsIgnoreCase(fileExtension)) {
+//            response.setContentType(MediaType.IMAGE_PNG_VALUE);
+//        } else {
+//            // Nếu định dạng không hợp lệ, trả về lỗi không hỗ trợ định dạng này
+//            response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+//            return;
+//        }
+//        response.setContentLengthLong(file.length()); // Kích thước của file
+//        response.setHeader("Content-Disposition", "inline; filename=" + filename); // Hiển thị ảnh trực tiếp trên trình duyệt
+//        Files.copy(file.toPath(), response.getOutputStream());
+//    }
 
 //    @PostMapping("/add-book")
 //    public ResponseDTO<Void> create(@ModelAttribute @Valid BookDTO bookDTO){
@@ -167,6 +173,49 @@ public class BookController {
 //                .status(200)
 //                .msg("ok").build();
 //    }
+
+    //Include Epub
+    @GetMapping("/download/{filename:.+}")
+    public void download(@PathVariable("filename") String filename, HttpServletResponse response) throws IOException {
+        File file = new File(UPLOAD_FOLDER + filename);
+        if (!file.exists()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        // Xác định kiểu phương tiện dựa trên loại tệp
+        String fileExtension = filename.substring(filename.lastIndexOf(".") + 1);
+        String contentType;
+        if ("jpeg".equalsIgnoreCase(fileExtension) || "jpg".equalsIgnoreCase(fileExtension)) {
+            contentType = MediaType.IMAGE_JPEG_VALUE;
+        } else if ("png".equalsIgnoreCase(fileExtension)) {
+            contentType = MediaType.IMAGE_PNG_VALUE;
+        } else if ("epub".equalsIgnoreCase(fileExtension)) {
+            contentType = "application/epub+zip"; // Kiểu phương tiện cho tệp EPUB
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+            return;
+        }
+
+        response.setContentType(contentType);
+        response.setContentLengthLong(file.length());
+        response.setHeader("Content-Disposition", "inline; filename=" + filename);
+        Files.copy(file.toPath(), response.getOutputStream());
+
+        incrementDownloadCount(filename);
+    }
+
+    private void incrementDownloadCount(String filename) {
+        // Tìm sách dựa trên filename (hoặc bookUrl)
+        Book book = bookRepo.findByBookUrl(filename); // Sử dụng bookUrl hoặc phương thức tương tự
+
+        if (book != null) {
+            // Tăng giá trị downloadCount lên và lưu lại
+            book.setDownloadCount(book.getDownloadCount() + 1);
+            bookRepo.save(book);
+        }
+    }
+
 
     @GetMapping("/list-book")
     public ResponseDTO<List<BookDTO>> list() {
